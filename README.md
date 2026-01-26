@@ -1,6 +1,7 @@
 # Symfony Template
 
-Ce projet est un squelette (template) pour les nouvelles applications Symfony, pré-configuré avec les outils modernes de développement.
+Ce projet est un squelette (template) pour les nouvelles applications Symfony, pré-configuré avec les outils modernes de
+développement.
 
 ## Fonctionnalités
 
@@ -26,7 +27,7 @@ Ce projet est un squelette (template) pour les nouvelles applications Symfony, p
     ```
 3. **Configurer les variables d'environnement**
 
-    Copiez le fichier `.env` en `.env.local` et adaptez las variables
+   Copiez le fichier `.env` en `.env.local` et adaptez las variables
 5. **Démarrer le serveur Symfony**
    ```bash
    symfony serve
@@ -37,7 +38,8 @@ Ce projet est un squelette (template) pour les nouvelles applications Symfony, p
 ### Commandes utiles
 
 - **Lancer les workers (Tailwind, etc.)** :
-  Le fichier `.symfony.local.yaml` est configuré pour lancer automatiquement Tailwind en mode watch via le CLI Symfony ainsi que la stack docker.
+  Le fichier `.symfony.local.yaml` est configuré pour lancer automatiquement Tailwind en mode watch via le CLI Symfony
+  ainsi que la stack docker.
 - **Accéder à la base de données** :
   L'utilisateur et le nom de la base sont définis par la variable par défaut `template`.
 - **Mailpit** :
@@ -50,11 +52,11 @@ Ce projet est un squelette (template) pour les nouvelles applications Symfony, p
 - [x] Installation Tailwind CSS
 - [x] Installation Tailwind Elements
 - [x] Configuration PHP-CS-Fixer / PHPStan
-- [ ] Configuration Editorconfig
+- [x] Configuration Editorconfig
 - [ ] Configuration PHPUnit / Panther
-- [ ] Création du template de base (base.html.twig)
+- [x] Création du template de base (base.html.twig)
 - [ ] Installation Symfony UX
-  - [ ] Icons
-  - [ ] Flash Messages
-  - [ ] Live Component
+    - [ ] Icons
+    - [ ] Flash Messages
+    - [ ] Live Component
 - [ ] Configuration Basic Auth
