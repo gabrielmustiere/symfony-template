@@ -48,8 +48,8 @@ Ce projet est un squelette (template) pour les nouvelles applications Symfony, p
 - [x] Configuration Symfony CLI
 - [x] Configuration Docker local
 - [x] Installation Tailwind CSS
-- [ ] Installation Tailwind Elements
-- [ ] Configuration PHP-CS-Fixer / PHPStan
+- [x] Installation Tailwind Elements
+- [x] Configuration PHP-CS-Fixer / PHPStan
 - [ ] Configuration Editorconfig
 - [ ] Configuration PHPUnit / Panther
 - [ ] Création du template de base (base.html.twig)
