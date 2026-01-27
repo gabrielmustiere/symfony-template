@@ -14,6 +14,8 @@ final class PageController extends AbstractController
     )]
     public function index(): Response
     {
+        $this->addFlash('success', 'Ceci est un sucès');
+
         return $this->render('page/index.html.twig');
     }
 }

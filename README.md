@@ -53,10 +53,11 @@ développement.
 - [x] Installation Tailwind Elements
 - [x] Configuration PHP-CS-Fixer / PHPStan
 - [x] Configuration Editorconfig
-- [ ] Configuration PHPUnit / Panther
+- [x] Configuration PHPUnit / Panther
 - [x] Création du template de base (base.html.twig)
-- [ ] Installation Symfony UX
-    - [ ] Icons
-    - [ ] Flash Messages
-    - [ ] Live Component
+- [x] Installation Symfony UX
+    - [x] Icons
+    - [x] Flash Messages
+    - [x] Live Component
 - [ ] Configuration Basic Auth
+- [ ] Ajout Castor
