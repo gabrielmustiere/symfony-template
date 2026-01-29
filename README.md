@@ -60,5 +60,4 @@ développement.
     - [x] Flash Messages
     - [x] Live Component
 - [x] Configuration Mailpit & Tests Email
-- [ ] Configuration Basic Auth
-- [ ] Ajout Castor
+- [x] Configuration Basic Auth

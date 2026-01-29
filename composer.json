@@ -90,6 +90,12 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "db-reset": [
+            "symfony console doctrine:database:drop --force",
+            "symfony console doctrine:database:create --if-not-exists",
+            "symfony console doctrine:migrations:migrate -n",
+            "symfony console doctrine:fixtures:load -n"
         ]
     },
     "conflict": {

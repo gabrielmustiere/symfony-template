@@ -25,7 +25,8 @@ final class PageController extends AbstractController
      */
     #[Route(
         path: '/test-email',
-        name: 'app_test_email'
+        name: 'app_test_email',
+        env: 'dev'
     )]
     public function testEmail(MailerInterface $mailer): Response
     {
@@ -40,6 +41,6 @@ final class PageController extends AbstractController
 
         $this->addFlash('success', 'Email de test envoyé avec succès !');
 
-        return $this->redirectToRoute('app_page');
+        return $this->redirectToRoute('app_login');
     }
 }
