@@ -8,7 +8,7 @@ final class ExampleControllerTest extends WebTestCase
 {
     public function testIndex(): void
     {
-        $client = ExampleControllerTest::createClient();
+        $client = self::createClient();
         $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
