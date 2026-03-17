@@ -15,8 +15,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    /** @phpstan-ignore property.unusedType (assigned by Doctrine) */
     private ?int $id = null;
 
+    /** @var non-empty-string|null */
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
@@ -39,6 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->email;
     }
 
+    /** @param non-empty-string $email */
     public function setEmail(string $email): static
     {
         $this->email = $email;
@@ -51,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return $this->email ?? throw new \LogicException('User email is not set.');
     }
 
     /**
@@ -96,7 +99,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __serialize(): array
     {
         $data = (array) $this;
-        $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
+        $data["\0" . self::class . "\0password"] = null !== $this->password ? hash('crc32c', $this->password) : null;
 
         return $data;
     }
