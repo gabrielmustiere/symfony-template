@@ -88,11 +88,89 @@ assets/
     - **database** : PostgreSQL 18.1 (`template/template`, port `5434`)
     - **mailpit** : SMTP dev (port `1027`) + UI web (port `8027`)
 
+## Architecture & Responsabilites
+
+### Couches et flux de donnees
+
+Request → Controller → Service/Manager → Repository → Entity → Response
+
+### Controller (`src/Controller/`)
+
+- Responsabilite : recevoir la requete, deleguer, retourner une reponse
+- JAMAIS de logique metier, de requetes Doctrine, de calculs
+- 1 action = 1 methode publique, injection des dependances par constructeur
+- Retourne : Response, JsonResponse, ou RedirectResponse
+
+### Service / Manager (`src/Service/`)
+
+- Responsabilite : logique metier reutilisable
+- Manager quand il orchestre plusieurs operations/services
+- Service quand il encapsule une logique unitaire
+- Peut appeler des repositories, jamais l'inverse
+
+### Repository (`src/Repository/`)
+
+- Responsabilite : acces donnees uniquement
+- Jamais de logique metier
+- QueryBuilder pour requetes complexes, methodes find* pour le simple
+
+### Entity (`src/Entity/`)
+
+- Responsabilite : structure de donnees + regles de domaine simples
+- Getters/setters, validations de contraintes, methodes de domaine simples
+- JAMAIS d'injection de service, JAMAIS d'appel repository
+
+### Arbre de decision — "Ou placer mon code ?"
+
+| Je dois...                      | Type de classe        | Repertoire             |
+|---------------------------------|-----------------------|------------------------|
+| Gerer une requete HTTP          | Controller            | `src/Controller/`      |
+| Executer de la logique metier   | Service / Manager     | `src/Service/`         |
+| Requeter la base de donnees     | Repository            | `src/Repository/`      |
+| Reagir a un evenement Symfony   | EventSubscriber       | `src/EventSubscriber/` |
+| Reagir a un evenement Doctrine  | EntityListener        | `src/EntityListener/`  |
+| Traiter un message async        | Message + Handler     | `src/Message/`         |
+| Creer un objet complexe         | Factory               | `src/Factory/`         |
+| Transformer/mapper des donnees  | Mapper / Transformer  | `src/Mapper/`          |
+| Definir un formulaire           | FormType              | `src/Form/`            |
+| Valider une contrainte custom   | Constraint+Validator  | `src/Validator/`       |
+| Envoyer un email                | Classe Mailer dediee  | `src/Mailer/`          |
+| Ajouter un filtre/fonction Twig | TwigExtension+Runtime | `src/Twig/`            |
+| Composant interactif serveur    | Live Component        | `src/Twig/Components/` |
+| Enum metier                     | Backed string enum    | `src/Enum/Type/`       |
+
+### Anti-patterns (a ne JAMAIS faire)
+
+- Controller qui contient du QueryBuilder ou de la logique metier
+- Un QueryBuilder en dehors d'un repository
+- Entity qui injecte un service ou appelle un repository
+- Service qui retourne une Response HTTP
+- Repository qui contient de la logique metier
+- Logique dans un template Twig (au-dela d'affichage conditionnel simple)
+- `new Service()` au lieu de l'injection de dependances
+
 ## Conventions
+
+### Nommage
+
+- **Classes** : PascalCase, suffixees par leur type (`UserRepository`, `InvoiceManager`, `OrderCreatedEvent`)
+- **Methodes** : camelCase, verbe d'action (`createUser`, `findByEmail`, `handleOrderCreated`)
+- **Templates** : snake_case, miroir de la route (`security/login.html.twig`)
+- **Routes** : snake_case prefixees par domaine (`app_login`, `app_page`)
+
+### Doctrine
 
 - **Entites** : `inversedBy`/`mappedBy` bidirectionnels, `ArrayCollection` dans constructeurs, `__toString()` pour l'admin
 - **Contraintes d'unicite** : pattern `UNIQ_{TABLE}_{CHAMP}`
 - **Migrations** : ne jamais modifier une migration commitee, en creer une nouvelle
+
+### Services
+
+- Injection par constructeur uniquement (pas de setter injection)
+- 1 service = 1 responsabilite
+
+### Enums & Mailer
+
 - **Enums** : backed string enums dans `src/Enum/Type/`
 - **Mailer** : classes dediees dans `src/Mailer/` avec `TemplatedEmail`
 
@@ -185,101 +263,3 @@ symfony php vendor/bin/php-cs-fixer fix
 - Probleme bloquant en BUILD → remonter immediatement
 - Pas de `dump()`, `var_dump()`, `dd()` dans le code commite
 
-### Types de classes PHP dans un projet Symfony
-
-## HTTP / Application
-
-- Controller : classe qui gère une requête HTTP et retourne une réponse.
-- Command : classe CLI exécutée via `symfony console`.
-- Service : classe métier réutilisable contenant de la logique applicative. Très générique à éviter.
-- Manager : service regroupant plusieurs opérations métier.
-- Factory : classe responsable de la création d’objets.
-- Builder : construit un objet complexe étape par étape.
-- Helper : utilitaire simple pour factoriser une logique spécifique.
-- Resolver : détermine dynamiquement une valeur ou un comportement.
-- Provider : fournit des données depuis une source donnée.
-- Processor : applique un traitement sur une donnée.
-- Mapper : transforme une structure de données en une autre.
-- Transformer : convertit une valeur d’un format vers un autre.
-- Hydrator : remplit un objet à partir de données brutes.
-
-## Doctrine / Data
-
-- Entity : objet Doctrine représentant une donnée persistée en base.
-- Repository : classe qui gère les requêtes et accès aux entités Doctrine.
-- Embeddable : objet intégré dans une entité sans table dédiée.
-- MappedSuperclass : classe de base Doctrine mutualisant des champs.
-- EntityListener : réagit aux événements d’une entité Doctrine.
-- DoctrineEventListener : écoute les événements globaux Doctrine.
-- DoctrineEventSubscriber : version déclarative des listeners Doctrine.
-- CustomType : type Doctrine personnalisé pour un format spécifique.
-- Fixture : charge des données de test ou initiales.
-- Migration : décrit une évolution du schéma de base.
-
-## Sécurité
-
-- User : entité représentant un utilisateur authentifié (implémente UserInterface).
-- UserProvider : charge un utilisateur depuis une source (BDD, API, etc).
-- Authenticator : gère le processus d’authentification.
-- Voter : centralise la logique d’autorisation.
-- UserChecker : effectue des vérifications supplémentaires sur un utilisateur.
-- PasswordHasher : gère le hash et la vérification des mots de passe.
-- AccessDeniedHandler : personnalise la réponse en cas d’accès refusé.
-- LogoutHandler : exécute une logique lors de la déconnexion.
-
-## Form
-
-- FormType : définit la structure et les champs d’un formulaire.
-- FormTypeExtension : étend un type de formulaire existant.
-- FormEventListener : réagit aux événements du formulaire.
-- FormEventSubscriber : version déclarative des listeners de formulaire.
-- DataTransformer : convertit les données entre formulaire et objet.
-
-## Validation
-
-- Constraint : définit une règle de validation.
-- ConstraintValidator : implémente la logique d’une contrainte.
-
-## Events
-
-- Event : objet transportant des données lors d’un événement.
-- EventListener : classe qui écoute un événement précis.
-- EventSubscriber : classe déclarant les événements auxquels elle réagit.
-
-## Messenger
-
-- Message : objet représentant une action ou donnée à traiter.
-- MessageHandler : classe qui traite un message.
-- Middleware : couche intermédiaire dans le traitement des messages.
-
-## Serializer
-
-- Normalizer : transforme un objet en données sérialisables.
-- Denormalizer : reconstruit un objet à partir de données.
-- Encoder : convertit les données en JSON, XML ou autre format.
-
-## Twig
-
-- TwigExtension : ajoute fonctions et filtres personnalisés.
-- TwigRuntime : contient la logique appelée par Twig.
-
-## Cache
-
-- CacheWarmer : prépare des données pour améliorer les performances.
-- CacheClearer : nettoie des caches spécifiques.
-
-## Dependency Injection
-
-- CompilerPass : modifie le container de services à la compilation.
-- Extension : charge et configure les services d’un bundle.
-- ServiceSubscriber : déclare explicitement les services utilisés.
-- ServiceLocator : fournit dynamiquement un sous-ensemble de services.
-
-## Intégration / technique
-
-- Mailer : classe qui envoie des emails.
-- Notifier : envoie des notifications multi-canaux.
-- HttpClient : effectue des appels HTTP externes.
-- ApiClient : encapsule un service externe.
-- WebhookHandler : traite des appels entrants externes.
-- Uploader : gère l’upload et le stockage de fichiers.
