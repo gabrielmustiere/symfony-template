@@ -85,8 +85,6 @@ Le fichier `.mcp.json` configure trois serveurs MCP pour l'assistance IA :
 
 ## État d'avancement (v1.0.0)
 
-Consultez le fichier [RELEASES.md](RELEASES.md) pour le détail des versions et le [CHANGELOG.md](CHANGELOG.md) pour le détail des changements.
-
 - [x] Configuration Symfony CLI
 - [x] Configuration Docker local (PostgreSQL, Mailpit)
 - [x] Installation Tailwind CSS 4
