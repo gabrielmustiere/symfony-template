@@ -10,8 +10,8 @@
 - **DB** : PostgreSQL 18
 - **Frontend** : Tailwind CSS 4, Stimulus, Symfony UX (Live Components, Turbo, Icons)
 - **Auth** : Form login (email/password)
-- **Tests** : PHPUnit 12 (Unit + Functional) + Panther (E2E navigateur) + Playwright (disponible)
-- **Dev** : Docker Compose (PostgreSQL, Mailpit) + Symfony CLI (proxy HTTPS sur `*.wip`)
+- **Tests** : PHPUnit 12 (Unit + Functional) + Playwright (E2E)
+- **Dev** : Symfony CLI (proxy HTTPS sur `*.wip`) + Docker Compose (services externes uniquement)
 - **Async** : Symfony Messenger (transport Doctrine)
 
 ## Commandes
@@ -27,8 +27,9 @@ symfony console make:migration                       # Apres modif entite
 symfony console doctrine:migrations:migrate -n       # Appliquer migrations
 symfony console tailwind:build --watch               # Tailwind
 
-symfony php bin/phpunit                              # Tests Unit + Functional + Panther
-npx playwright test                                  # Tests E2E Playwright
+symfony php bin/phpunit                              # Tests Unit + Functional
+npm run test:e2e                                     # Tests E2E Playwright
+npx playwright test tests/e2e/login.spec.ts          # Un test E2E specifique
 
 symfony php vendor/bin/phpstan analyse               # Analyse statique (level 9)
 symfony php vendor/bin/php-cs-fixer fix              # Code style
@@ -50,8 +51,8 @@ src/
 fixtures/                          # Fixtures Doctrine (PSR-4: DataFixtures\) — PAS dans src/DataFixtures/
 tests/
 ├── bootstrap.php
-└── Panther/
-    └── LoginTest.php              # E2E login flow (Panther navigateur)
+└── e2e/
+    └── login.spec.ts              # E2E login flow (Playwright)
 
 templates/
 ├── base.html.twig                 # Layout principal
@@ -77,15 +78,15 @@ assets/
 - { path: ^/, roles: ROLE_USER }
 ```
 
-## Docker Compose
+## Environnement dev
 
-- **database** : PostgreSQL 18.1 (`template/template`, port `5434`)
-- **mailpit** : SMTP dev (port `1027`) + UI web (port `8027`)
+**Toutes les commandes PHP passent par `symfony` CLI** (jamais `php` directement) — cela injecte automatiquement les variables Docker Compose (ports DB, SMTP, etc.).
 
-## Symfony CLI (`.symfony.local.yaml`)
-
-- **Proxy** : domaine local `template.wip`
+- **Proxy** : domaine local `template.wip` (`.symfony.local.yaml`)
 - **Workers** : Docker Compose, Messenger consumer (`async`), Tailwind build (`--watch`)
+- **Docker Compose** (services externes uniquement, pas d'app PHP) :
+    - **database** : PostgreSQL 18.1 (`template/template`, port `5434`)
+    - **mailpit** : SMTP dev (port `1027`) + UI web (port `8027`)
 
 ## Conventions
 
@@ -102,11 +103,11 @@ assets/
 - **Unit** : `createStub()` sans attentes, `createMock()` avec `expects()` (PHPUnit 12 notices sinon)
 - **Functional** : `WebTestCase`/`KernelTestCase` — vraie DB
 
-### Panther (E2E navigateur)
+### Playwright (E2E)
 
-- Tests dans `tests/Panther/`
-- Utilise un vrai navigateur Chrome headless
-- `$client = static::createPantherClient()`
+- Tests dans `tests/e2e/` (TypeScript)
+- Config : `playwright.config.ts`, baseURL `https://template.wip`, sequentiel (`workers: 1`)
+- Selecteurs : privilegier `data-test="..."` plutot que classes CSS
 
 ### Identifiants de test
 
@@ -168,7 +169,7 @@ symfony php vendor/bin/php-cs-fixer fix
 | Repository custom                | Functional (`KernelTestCase`) |
 | EventSubscriber / EntityListener | Unit (declenchement manuel)   |
 | Workflow / StateMachine          | Functional (`KernelTestCase`) |
-| Template / UI / parcours         | E2E Panther ou Playwright     |
+| Template / UI / parcours         | E2E Playwright (`data-test`)  |
 
 **Actions** : ecrire les tests, lancer PHPUnit + PHPStan + CS-Fixer, verifier 0 regressions.
 
@@ -176,9 +177,109 @@ symfony php vendor/bin/php-cs-fixer fix
 
 ### Regles permanentes
 
+- Toujours utiliser `symfony` CLI pour executer PHP (`symfony php`, `symfony console`) — jamais `php` directement
 - Ne jamais modifier `vendor/`
 - Toute modif de schema = migration generee par `symfony console make:migration` et relue
 - Ne jamais modifier une migration commitee
 - Ambiguite en PLAN/ANALYZE → poser la question avant de coder
 - Probleme bloquant en BUILD → remonter immediatement
 - Pas de `dump()`, `var_dump()`, `dd()` dans le code commite
+
+### Types de classes PHP dans un projet Symfony
+
+## HTTP / Application
+
+- Controller : classe qui gère une requête HTTP et retourne une réponse.
+- Command : classe CLI exécutée via `symfony console`.
+- Service : classe métier réutilisable contenant de la logique applicative. Très générique à éviter.
+- Manager : service regroupant plusieurs opérations métier.
+- Factory : classe responsable de la création d’objets.
+- Builder : construit un objet complexe étape par étape.
+- Helper : utilitaire simple pour factoriser une logique spécifique.
+- Resolver : détermine dynamiquement une valeur ou un comportement.
+- Provider : fournit des données depuis une source donnée.
+- Processor : applique un traitement sur une donnée.
+- Mapper : transforme une structure de données en une autre.
+- Transformer : convertit une valeur d’un format vers un autre.
+- Hydrator : remplit un objet à partir de données brutes.
+
+## Doctrine / Data
+
+- Entity : objet Doctrine représentant une donnée persistée en base.
+- Repository : classe qui gère les requêtes et accès aux entités Doctrine.
+- Embeddable : objet intégré dans une entité sans table dédiée.
+- MappedSuperclass : classe de base Doctrine mutualisant des champs.
+- EntityListener : réagit aux événements d’une entité Doctrine.
+- DoctrineEventListener : écoute les événements globaux Doctrine.
+- DoctrineEventSubscriber : version déclarative des listeners Doctrine.
+- CustomType : type Doctrine personnalisé pour un format spécifique.
+- Fixture : charge des données de test ou initiales.
+- Migration : décrit une évolution du schéma de base.
+
+## Sécurité
+
+- User : entité représentant un utilisateur authentifié (implémente UserInterface).
+- UserProvider : charge un utilisateur depuis une source (BDD, API, etc).
+- Authenticator : gère le processus d’authentification.
+- Voter : centralise la logique d’autorisation.
+- UserChecker : effectue des vérifications supplémentaires sur un utilisateur.
+- PasswordHasher : gère le hash et la vérification des mots de passe.
+- AccessDeniedHandler : personnalise la réponse en cas d’accès refusé.
+- LogoutHandler : exécute une logique lors de la déconnexion.
+
+## Form
+
+- FormType : définit la structure et les champs d’un formulaire.
+- FormTypeExtension : étend un type de formulaire existant.
+- FormEventListener : réagit aux événements du formulaire.
+- FormEventSubscriber : version déclarative des listeners de formulaire.
+- DataTransformer : convertit les données entre formulaire et objet.
+
+## Validation
+
+- Constraint : définit une règle de validation.
+- ConstraintValidator : implémente la logique d’une contrainte.
+
+## Events
+
+- Event : objet transportant des données lors d’un événement.
+- EventListener : classe qui écoute un événement précis.
+- EventSubscriber : classe déclarant les événements auxquels elle réagit.
+
+## Messenger
+
+- Message : objet représentant une action ou donnée à traiter.
+- MessageHandler : classe qui traite un message.
+- Middleware : couche intermédiaire dans le traitement des messages.
+
+## Serializer
+
+- Normalizer : transforme un objet en données sérialisables.
+- Denormalizer : reconstruit un objet à partir de données.
+- Encoder : convertit les données en JSON, XML ou autre format.
+
+## Twig
+
+- TwigExtension : ajoute fonctions et filtres personnalisés.
+- TwigRuntime : contient la logique appelée par Twig.
+
+## Cache
+
+- CacheWarmer : prépare des données pour améliorer les performances.
+- CacheClearer : nettoie des caches spécifiques.
+
+## Dependency Injection
+
+- CompilerPass : modifie le container de services à la compilation.
+- Extension : charge et configure les services d’un bundle.
+- ServiceSubscriber : déclare explicitement les services utilisés.
+- ServiceLocator : fournit dynamiquement un sous-ensemble de services.
+
+## Intégration / technique
+
+- Mailer : classe qui envoie des emails.
+- Notifier : envoie des notifications multi-canaux.
+- HttpClient : effectue des appels HTTP externes.
+- ApiClient : encapsule un service externe.
+- WebhookHandler : traite des appels entrants externes.
+- Uploader : gère l’upload et le stockage de fichiers.
