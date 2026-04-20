@@ -7,7 +7,7 @@ développement.
 
 - **Framework** : Symfony 8.0+
 - **Serveur local** : Intégration complète avec le CLI Symfony (proxy HTTPS `*.wip`)
-- **Base de données** : PostgreSQL 18 via Docker Compose
+- **Base de données** : SQLite (fichier local, zéro infra)
 - **Assets** : Tailwind CSS 4 via Symfony UX
 - **E-mails** : Mailpit pour la capture des mails en développement
 - **Auth** : Authentification par formulaire (email/password)
@@ -20,7 +20,7 @@ développement.
 
 - [PHP 8.4+](https://www.php.net/)
 - [Composer](https://getcomposer.org/)
-- [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)
+- [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/) (uniquement pour Mailpit)
 - [Symfony CLI](https://symfony.com/download)
 - [Node.js](https://nodejs.org/) (pour Playwright et les outils MCP)
 
@@ -35,9 +35,8 @@ développement.
 3. **Configurer les variables d'environnement**
 
    Copiez le fichier `.env` en `.env.local` et adaptez les variables.
-4. **Créer la base de données**
+4. **Créer la base de données** (SQLite, fichier créé automatiquement dans `var/data.db`)
    ```bash
-   symfony console doctrine:database:create --if-not-exists
    symfony console doctrine:migrations:migrate -n
    symfony console doctrine:fixtures:load -n
    ```
@@ -54,7 +53,7 @@ développement.
   Le fichier `.symfony.local.yaml` est configuré pour lancer automatiquement Tailwind en mode watch via le CLI Symfony
   ainsi que la stack Docker.
 - **Accéder à la base de données** :
-  L'utilisateur et le nom de la base sont définis par la variable par défaut `template`.
+  Fichier SQLite situé dans `var/data.db` (dev) et `var/data_test.db` (test). Ouvrable avec `sqlite3 var/data.db` ou tout client compatible.
 - **Mailpit** :
   L'interface web est accessible sur `http://localhost:8027`.
 
@@ -86,7 +85,7 @@ Le fichier `.mcp.json` configure trois serveurs MCP pour l'assistance IA :
 ## État d'avancement (v1.0.0)
 
 - [x] Configuration Symfony CLI
-- [x] Configuration Docker local (PostgreSQL, Mailpit)
+- [x] Configuration Docker local (Mailpit)
 - [x] Installation Tailwind CSS 4
 - [x] Configuration PHP-CS-Fixer / PHPStan
 - [x] Configuration Editorconfig

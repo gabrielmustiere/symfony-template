@@ -16,7 +16,7 @@ init: up ## Installe les dépendances, crée la base et charge les fixtures
 
 ## Docker & serveur
 
-up: ## Démarre les conteneurs Docker (Postgres + Mailpit)
+up: ## Démarre les conteneurs Docker (Mailpit)
 	docker compose up -d --wait
 
 down: ## Arrête les conteneurs Docker
@@ -30,13 +30,13 @@ stop: ## Arrête le serveur Symfony
 
 ## Base de données
 
-db-create: ## Crée la base si elle n'existe pas
-	symfony console doctrine:database:create --if-not-exists
+db-create: ## Crée le fichier SQLite si besoin (auto-créé au premier migrate)
+	@mkdir -p var && touch var/data.db
 
-db-drop: ## Supprime la base
-	symfony console doctrine:database:drop --force --if-exists
+db-drop: ## Supprime le fichier SQLite
+	@rm -f var/data.db var/data_test.db
 
-db-reset: db-drop db-create migrate fixtures ## Recrée la base from scratch (drop + create + migrate + fixtures)
+db-reset: db-drop migrate fixtures ## Recrée la base from scratch (drop + migrate + fixtures)
 
 migrate: ## Applique les migrations Doctrine
 	symfony console doctrine:migrations:migrate -n

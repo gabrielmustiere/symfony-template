@@ -4,7 +4,7 @@ Template Symfony 8 avec authentification, Tailwind CSS 4, PHPUnit 12, Playwright
 
 ## Stack
 
-- PHP 8.4+ (`declare(strict_types=1)` partout), PostgreSQL 18, Symfony Messenger (Doctrine)
+- PHP 8.4+ (`declare(strict_types=1)` partout), SQLite (fichier `var/data.db`), Symfony Messenger (Doctrine)
 - Frontend : Tailwind CSS 4, Stimulus, Symfony UX (Live Components, Turbo, Icons)
 - Tests : PHPUnit 12 + Playwright (E2E)
 
@@ -14,10 +14,9 @@ Toutes les commandes PHP passent par `symfony` CLI — jamais `php` directement.
 
 ```bash
 symfony serve                                        # Serveur dev
-symfony console doctrine:database:drop --force --if-exists && \
-  symfony console doctrine:database:create --if-not-exists && \
+rm -f var/data.db && \
   symfony console doctrine:migrations:migrate -n && \
-  symfony console doctrine:fixtures:load -n          # Reset DB complet
+  symfony console doctrine:fixtures:load -n          # Reset DB complet (SQLite)
 symfony console make:migration                       # Apres modif entite
 symfony php bin/phpunit                              # Tests Unit + Functional
 npm run test:e2e                                     # Tests E2E Playwright
