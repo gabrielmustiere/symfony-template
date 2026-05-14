@@ -8,8 +8,9 @@ export default defineConfig({
   workers: 1,
   reporter: 'html',
   use: {
-    baseURL: 'https://template.wip',
+    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? 'https://template.wip',
     trace: 'on-first-retry',
+    ignoreHTTPSErrors: true,
   },
   projects: [
     {

@@ -1,18 +1,19 @@
 .DEFAULT_GOAL := help
-.PHONY: help init up down serve stop db-create db-drop db-reset migrate migration fixtures \
-        test test-unit test-e2e phpstan cs-fix build quality
+.PHONY: help init install up down serve stop start db-create db-drop db-reset migrate migration fixtures \
+        test test-unit test-e2e phpstan cs-fix cs-check build quality ci
 
 help: ## Affiche cette aide
 	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) | sort | awk -F ':.*## ' '{printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 ## Installation
 
-init: up ## Installe les dépendances, crée la base et charge les fixtures
+init: up install db-reset ## Installation complète (deps + DB + fixtures)
+
+install: ## Installe les dépendances PHP, JS et Playwright
 	symfony composer install
 	npm install
-	npx playwright install --with-deps
+	npx playwright install chromium
 	symfony console tailwind:build
-	$(MAKE) db-reset
 
 ## Docker & serveur
 
@@ -28,12 +29,14 @@ serve: ## Lance le serveur Symfony en arrière-plan
 stop: ## Arrête le serveur Symfony
 	symfony server:stop
 
+start: up serve ## Démarre Docker + serveur Symfony
+
 ## Base de données
 
 db-create: ## Crée le fichier SQLite si besoin (auto-créé au premier migrate)
 	@mkdir -p var && touch var/data.db
 
-db-drop: ## Supprime le fichier SQLite
+db-drop: ## Supprime les fichiers SQLite (dev + test)
 	@rm -f var/data.db var/data_test.db
 
 db-reset: db-drop migrate fixtures ## Recrée la base from scratch (drop + migrate + fixtures)
@@ -60,13 +63,20 @@ test-e2e: ## Lance les tests E2E Playwright
 ## Qualité
 
 phpstan: ## Analyse statique PHPStan (niveau 9)
-	symfony php vendor/bin/phpstan analyse
+	symfony php vendor/bin/phpstan analyse --no-progress
 
 cs-fix: ## Correction automatique avec PHP CS Fixer
 	symfony php vendor/bin/php-cs-fixer fix
+
+cs-check: ## Vérifie le code style sans modifier (mode CI)
+	symfony php vendor/bin/php-cs-fixer fix --dry-run --diff
+
+lint: cs-check phpstan ## Lint en lecture seule (CS-Fixer dry-run + PHPStan)
 
 build: ## Build des assets (Tailwind + AssetMapper)
 	symfony console tailwind:build --minify
 	symfony console asset-map:compile
 
-quality: cs-fix phpstan build ## Lance toute la QA (CS Fixer + PHPStan + build)
+quality: cs-fix phpstan build ## Lance toute la QA en mode dev (CS Fixer + PHPStan + build)
+
+ci: lint test-unit ## Lance la suite CI (lint + tests unitaires)

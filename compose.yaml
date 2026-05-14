@@ -8,3 +8,9 @@ services:
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '--spider', 'http://localhost:8025/readyz']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
