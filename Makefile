@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 .PHONY: help init install up down serve stop start db-create db-drop db-reset migrate migration fixtures \
-        test test-unit test-e2e phpstan cs-fix cs-check build quality ci
+        test phpunit playwright phpstan php-cs-fix php-cs-check build quality ci
 
 help: ## Affiche cette aide
 	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) | sort | awk -F ':.*## ' '{printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}'
@@ -52,12 +52,12 @@ fixtures: ## Charge les fixtures Doctrine
 
 ## Tests
 
-test: test-unit ## Alias de test-unit
+test: phpunit ## Alias de phpunit
 
-test-unit: ## Lance les tests PHPUnit (Unit + Functional)
+phpunit: ## Lance les tests PHPUnit (Unit + Functional)
 	symfony php bin/phpunit
 
-test-e2e: ## Lance les tests E2E Playwright
+playwright: ## Lance les tests E2E Playwright
 	npm run test:e2e
 
 ## Qualité
@@ -65,18 +65,18 @@ test-e2e: ## Lance les tests E2E Playwright
 phpstan: ## Analyse statique PHPStan (niveau 9)
 	symfony php vendor/bin/phpstan analyse --no-progress
 
-cs-fix: ## Correction automatique avec PHP CS Fixer
+php-cs-fix: ## Correction automatique avec PHP CS Fixer
 	symfony php vendor/bin/php-cs-fixer fix
 
-cs-check: ## Vérifie le code style sans modifier (mode CI)
+php-cs-check: ## Vérifie le code style sans modifier (mode CI)
 	symfony php vendor/bin/php-cs-fixer fix --dry-run --diff
 
-lint: cs-check phpstan ## Lint en lecture seule (CS-Fixer dry-run + PHPStan)
+lint: php-cs-check phpstan ## Lint en lecture seule (CS-Fixer dry-run + PHPStan)
 
 build: ## Build des assets (Tailwind + AssetMapper)
 	symfony console tailwind:build --minify
 	symfony console asset-map:compile
 
-quality: cs-fix phpstan build ## Lance toute la QA en mode dev (CS Fixer + PHPStan + build)
+quality: php-cs-fix phpstan build ## Lance toute la QA en mode dev (CS Fixer + PHPStan + build)
 
-ci: lint test-unit ## Lance la suite CI (lint + tests unitaires)
+ci: lint phpunit ## Lance la suite CI (lint + tests unitaires)
