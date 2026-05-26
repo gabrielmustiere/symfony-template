@@ -7,6 +7,16 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-05-26
+
+### Added
+- Intégration de Symfony UX Toolkit avec dépendances `tales-from-a-dev/twig-tailwind-extra` et `twig/html-extra`.
+- Composant Twig `<twig:Button>` (`templates/components/Button.html.twig`) avec variants `html_cva` (brand, secondary, outline, ghost, etc.), tailles, formes et fusion intelligente via `tailwind_merge`.
+- ADR-0001 documentant la stack front du template (Paper + Tailwind 4 + Flowbite 4 + UX Toolkit).
+
+### Changed
+- Page d'accueil (`templates/page/index.html.twig`) : boutons inline migrés vers `<twig:Button>`.
+
 ## [1.4.0] - 2026-05-26
 
 ### Added
@@ -123,7 +133,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Frontend Tailwind CSS avec Symfony UX (Stimulus, AssetMapper).
 - Automatisation via Symfony CLI (watch Tailwind, services Docker).
 
-[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.1.0...v1.2.0
