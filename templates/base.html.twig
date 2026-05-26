@@ -1,162 +1,146 @@
 <!DOCTYPE html>
-<html lang="fr" class="h-full bg-white dark:bg-gray-900">
+<html lang="fr" class="h-full bg-white dark:bg-gray-950">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Symfony Template{% endblock %}</title>
     <link rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-    {% block stylesheets %}
-    {% endblock %}
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><rect width=%22128%22 height=%22128%22 rx=%2224%22 fill=%22%23111111%22/><text y=%221.05em%22 x=%220.5em%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2272%22 font-weight=%22700%22 fill=%22%238B5CF6%22>sf</text></svg>">
+    {% block stylesheets %}{% endblock %}
 
     {% block javascripts %}
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
-<body class="h-full">
-<el-dialog>
-    <dialog id="sidebar" class="backdrop:bg-transparent lg:hidden">
-        <el-dialog-backdrop
-            class="fixed inset-0 bg-gray-900/80 transition-opacity duration-300 ease-linear data-closed:opacity-0"></el-dialog-backdrop>
+<body class="h-full bg-white font-body text-gray-800 antialiased dark:bg-gray-950 dark:text-gray-200">
 
-        <div tabindex="0" class="fixed inset-0 flex focus:outline-none">
-            <el-dialog-panel
-                class="group/dialog-panel relative mr-16 flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out data-closed:-translate-x-full">
-                <div
-                    class="absolute top-0 left-full flex w-16 justify-center pt-5 duration-300 ease-in-out group-data-closed/dialog-panel:opacity-0">
-                    <button type="button" command="close" commandfor="sidebar" class="-m-2.5 p-2.5">
-                        <span class="sr-only">Close sidebar</span>
-                        <twig:ux:icon name="tabler:x" class="size-6 text-white"/>
-                    </button>
-                </div>
+{# Mobile drawer toggle button (top-left) — controlled by Flowbite drawer #}
+<nav class="fixed top-0 z-30 w-full border-b border-gray-200 bg-white px-4 py-2.5 dark:border-gray-800 dark:bg-gray-950 lg:hidden">
+    <div class="flex items-center justify-between">
+        <button data-drawer-target="paper-sidebar" data-drawer-toggle="paper-sidebar" aria-controls="paper-sidebar"
+                type="button"
+                class="inline-flex items-center rounded-md p-2 text-sm text-gray-500 hover:bg-gray-100 focus:ring-2 focus:ring-gray-200 focus:outline-none dark:text-gray-400 dark:hover:bg-gray-800">
+            <span class="sr-only">Ouvrir le menu</span>
+            <twig:ux:icon name="tabler:menu-2" class="size-6"/>
+        </button>
+        <a href="{{ path('app_page') }}" class="flex items-center gap-2">
+            <span class="grid size-7 place-items-center rounded-md bg-gray-900 font-display text-xs font-bold text-violet-400 dark:bg-violet-500 dark:text-gray-900">sf</span>
+            <span class="font-display text-base font-semibold tracking-tight text-gray-900 dark:text-white">Paper</span>
+        </a>
+        <div class="w-10"></div>
+    </div>
+</nav>
 
-                <!-- Sidebar component, swap this element with another sidebar if you like -->
-                <div
-                    class="relative flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4 ring-1 ring-white/10 dark:before:pointer-events-none dark:before:absolute dark:before:inset-0 dark:before:bg-black/10">
-                    <div class="relative flex h-16 shrink-0 items-center">
-                        <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                             alt="Your Company" class="h-8 w-auto"/>
-                    </div>
-                    <nav class="relative flex flex-1 flex-col">
-                        <ul role="list" class="flex flex-1 flex-col gap-y-7">
-                            <li>
-                                <ul role="list" class="-mx-2 space-y-1">
-                                    <li>
-                                        <!-- Current: "bg-white/5 text-white", Default: "text-gray-400 hover:text-white hover:bg-white/5" -->
-                                        <a href="#"
-                                           class="group flex gap-x-3 rounded-md bg-white/5 p-2 text-sm/6 font-semibold text-white">
-                                            <twig:ux:icon name="tabler:layout-dashboard" class="size-6 shrink-0"/>
-                                            Dashboard
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="mt-auto">
-                                <a href="#"
-                                   class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-400 hover:bg-white/5 hover:text-white">
-                                    <twig:ux:icon name="tabler:settings" class="size-6 shrink-0"/>
-                                    Settings
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-            </el-dialog-panel>
-        </div>
-    </dialog>
-</el-dialog>
+{# Sidebar — Flowbite drawer on mobile, static on lg+ #}
+<aside id="paper-sidebar"
+       class="fixed top-0 left-0 z-40 h-screen w-64 -translate-x-full border-r border-gray-200 bg-white transition-transform dark:border-gray-800 dark:bg-gray-950 lg:translate-x-0"
+       aria-label="Sidebar">
+    <div class="flex h-full flex-col px-4 py-5">
+        <a href="{{ path('app_page') }}" class="mb-8 flex items-center gap-2.5 px-2">
+            <span class="grid size-9 place-items-center rounded-lg bg-gray-900 font-display text-sm font-bold text-violet-400 dark:bg-violet-500 dark:text-gray-900">sf</span>
+            <div class="leading-tight">
+                <div class="font-display text-base font-semibold tracking-tight text-gray-900 dark:text-white">Paper</div>
+                <div class="text-2xs uppercase tracking-wider text-gray-500 dark:text-gray-400">Symfony 8 · Flowbite 4</div>
+            </div>
+        </a>
 
-<!-- Static sidebar for desktop -->
-<div class="hidden bg-gray-900 ring-1 ring-white/10 lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-    <!-- Sidebar component, swap this element with another sidebar if you like -->
-    <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 px-6 pb-4">
-        <div class="flex h-16 shrink-0 items-center">
-            <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company"
-                 class="h-8 w-auto"/>
-        </div>
-        <nav class="flex flex-1 flex-col">
-            <ul role="list" class="flex flex-1 flex-col gap-y-7">
+        <nav class="flex-1">
+            <p class="px-2 pb-2 text-2xs font-semibold uppercase tracking-wider text-gray-400">Workspace</p>
+            <ul class="space-y-1">
                 <li>
-                    <ul role="list" class="-mx-2 space-y-1">
-                        <li>
-                            <!-- Current: "bg-white/5 text-white", Default: "text-gray-400 hover:text-white hover:bg-white/5" -->
-                            <a href="#"
-                               class="group flex gap-x-3 rounded-md bg-white/5 p-2 text-sm/6 font-semibold text-white">
-                                <twig:ux:icon name="tabler:layout-dashboard" class="size-6 shrink-0"/>
-                                Dashboard
-                            </a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('app_page') }}"
+                       class="group flex items-center gap-3 rounded-md bg-violet-50 px-3 py-2 text-sm font-medium text-violet-700 dark:bg-violet-500/10 dark:text-violet-300">
+                        <twig:ux:icon name="tabler:layout-dashboard" class="size-5"/>
+                        Tableau de bord
+                    </a>
                 </li>
-                <li class="mt-auto">
+                <li>
                     <a href="#"
-                       class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-gray-400 hover:bg-white/5 hover:text-white">
-                        <twig:ux:icon name="tabler:settings" class="size-6 shrink-0"/>
-                        Settings
+                       class="group flex items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white">
+                        <twig:ux:icon name="tabler:files" class="size-5 text-gray-400"/>
+                        Documents
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                       class="group flex items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white">
+                        <twig:ux:icon name="tabler:users" class="size-5 text-gray-400"/>
+                        Utilisateurs
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                       class="group flex items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white">
+                        <twig:ux:icon name="tabler:chart-bar" class="size-5 text-gray-400"/>
+                        Statistiques
+                    </a>
+                </li>
+            </ul>
+
+            <p class="mt-8 px-2 pb-2 text-2xs font-semibold uppercase tracking-wider text-gray-400">Système</p>
+            <ul class="space-y-1">
+                <li>
+                    <a href="#"
+                       class="group flex items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white">
+                        <twig:ux:icon name="tabler:settings" class="size-5 text-gray-400"/>
+                        Paramètres
+                    </a>
+                </li>
+                <li>
+                    <a href="#"
+                       class="group flex items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-900 dark:hover:text-white">
+                        <twig:ux:icon name="tabler:help" class="size-5 text-gray-400"/>
+                        Documentation
                     </a>
                 </li>
             </ul>
         </nav>
-    </div>
-</div>
 
-<div class="lg:pl-72">
-    <div
-        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:px-8 dark:border-white/10 dark:bg-gray-900">
-        <button type="button" command="show-modal" commandfor="sidebar"
-                class="-m-2.5 p-2.5 text-gray-700 hover:text-gray-900 lg:hidden dark:text-gray-400 dark:hover:text-white">
-            <span class="sr-only">Open sidebar</span>
-            <twig:ux:icon name="tabler:menu-2" class="size-6"/>
-        </button>
-
-        <!-- Separator -->
-        <div aria-hidden="true" class="h-6 w-px bg-gray-900/10 lg:hidden dark:bg-white/10"></div>
-
-        <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-            <form action="#" method="GET" class="grid flex-1 grid-cols-1">
-                <input name="search" placeholder="Search" aria-label="Search"
-                       class="col-start-1 row-start-1 block size-full bg-white pl-8 text-base text-gray-900 outline-hidden placeholder:text-gray-400 sm:text-sm/6 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-500"/>
-                <twig:ux:icon name="tabler:search"
-                              class="pointer-events-none col-start-1 row-start-1 size-5 self-center text-gray-400"/>
-            </form>
-            <div class="flex items-center gap-x-4 lg:gap-x-6">
-                <button type="button"
-                        class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300">
-                    <span class="sr-only">View notifications</span>
-                    <twig:ux:icon name="tabler:bell" class="size-6"/>
+        {# User card — bottom of sidebar #}
+        <div class="mt-auto border-t border-gray-200 pt-4 dark:border-gray-800">
+            {% if app.user %}
+                <button id="paper-user-menu-btn" data-dropdown-toggle="paper-user-menu" data-dropdown-placement="top"
+                        type="button"
+                        class="flex w-full items-center gap-3 rounded-md px-2 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-900">
+                    <span class="grid size-9 shrink-0 place-items-center rounded-full bg-gray-900 text-sm font-semibold text-white dark:bg-violet-500">
+                        {{ app.user.userIdentifier|first|upper }}
+                    </span>
+                    <span class="min-w-0 flex-1">
+                        <span class="block truncate text-sm font-medium text-gray-900 dark:text-white">{{ app.user.userIdentifier }}</span>
+                        <span class="block truncate text-xs text-gray-500">Connecté</span>
+                    </span>
+                    <twig:ux:icon name="tabler:dots-vertical" class="size-4 text-gray-400"/>
                 </button>
-
-                <!-- Separator -->
-                <div aria-hidden="true"
-                     class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10 dark:lg:bg-gray-100/10"></div>
-
-                <!-- Profile dropdown -->
-                <el-dropdown class="relative">
-                    <button class="relative flex items-center">
-                        <span class="absolute -inset-1.5"></span>
-                        <span class="sr-only">Open user menu</span>
-                        <img
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                            alt=""
-                            class="size-8 rounded-full bg-gray-50 outline -outline-offset-1 outline-black/5 dark:bg-gray-800 dark:outline-white/10"/>
-                        <span class="hidden lg:flex lg:items-center">
-              <span aria-hidden="true"
-                    class="ml-4 text-sm/6 font-semibold text-gray-900 dark:text-white">Tom Cook</span>
-              <twig:ux:icon name="tabler:chevron-down" class="ml-2 size-5 text-gray-400 dark:text-gray-500"/>
-            </span>
-                    </button>
-                    <el-menu anchor="bottom end" popover
-                             class="w-32 origin-top-right rounded-md bg-white py-2 shadow-lg outline outline-gray-900/5 transition transition-discrete [--anchor-gap:--spacing(2.5)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in dark:bg-gray-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
-                        <a href="#"
-                           class="block px-3 py-1 text-sm/6 text-gray-900 focus:bg-gray-50 focus:outline-hidden dark:text-white dark:focus:bg-white/5">Sign
-                            out</a>
-                    </el-menu>
-                </el-dropdown>
-            </div>
+                <div id="paper-user-menu"
+                     class="z-50 hidden w-56 divide-y divide-gray-100 rounded-lg border border-gray-200 bg-white shadow-lg dark:divide-gray-700 dark:border-gray-700 dark:bg-gray-900">
+                    <div class="px-4 py-3 text-sm">
+                        <div class="font-medium text-gray-900 dark:text-white">{{ app.user.userIdentifier }}</div>
+                        <div class="truncate text-xs text-gray-500">Compte utilisateur</div>
+                    </div>
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-300">
+                        <li><a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"><twig:ux:icon name="tabler:user" class="size-4"/> Profil</a></li>
+                        <li><a href="#" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"><twig:ux:icon name="tabler:settings" class="size-4"/> Paramètres</a></li>
+                    </ul>
+                    <div class="py-2">
+                        <a href="{{ path('app_logout') }}"
+                           class="flex items-center gap-2 px-4 py-2 text-sm text-rose-700 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-900/30">
+                            <twig:ux:icon name="tabler:logout" class="size-4"/> Déconnexion
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{{ path('app_login') }}"
+                   class="flex items-center justify-center gap-2 rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-gray-800 dark:bg-violet-500 dark:hover:bg-violet-400">
+                    <twig:ux:icon name="tabler:login" class="size-4"/> Se connecter
+                </a>
+            {% endif %}
         </div>
     </div>
+</aside>
 
-    <main class="py-10">
-        <div class="px-4 sm:px-6 lg:px-8">
+<div class="lg:pl-64">
+    <main class="min-h-screen pt-16 lg:pt-0">
+        <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
             {% block body %}{% endblock %}
         </div>
     </main>
@@ -164,6 +148,5 @@
 
 {% include 'common/flash-messages.html.twig' %}
 
-<script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
 </body>
 </html>

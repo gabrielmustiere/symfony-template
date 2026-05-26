@@ -1,10 +1,10 @@
 {
   "dependencies": {
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.2",
-    "@types/node": "^25.5.0"
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1"
   },
   "scripts": {
     "test:e2e": "npx playwright test"
