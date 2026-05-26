@@ -7,6 +7,14 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-05-26
+
+### Changed
+- Uniformisation des cibles Makefile : `test-unit` → `phpunit`, `test-e2e` → `playwright`, `cs-fix` → `php-cs-fix`, `cs-check` → `php-cs-check`. Alias `lint` et `ci` clarifiés.
+
+### Removed
+- Worker `mate` retiré de `.symfony.local.yaml` (l'extension tourne désormais via MCP, pas via un worker Symfony CLI).
+
 ## [1.5.0] - 2026-05-26
 
 ### Added
@@ -133,7 +141,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Frontend Tailwind CSS avec Symfony UX (Stimulus, AssetMapper).
 - Automatisation via Symfony CLI (watch Tailwind, services Docker).
 
-[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.1...HEAD
+[1.5.1]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.2.0...v1.3.0
