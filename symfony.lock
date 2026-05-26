@@ -352,6 +352,9 @@
             "config/routes/ux_live_component.yaml"
         ]
     },
+    "symfony/ux-toolkit": {
+        "version": "v3.0.0"
+    },
     "symfony/ux-turbo": {
         "version": "2.32",
         "recipe": {
@@ -424,6 +427,15 @@
         "files": [
             "config/packages/symfonycasts_tailwind.yaml"
         ]
+    },
+    "tales-from-a-dev/twig-tailwind-extra": {
+        "version": "1.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.2",
+            "ref": "7243ab070ed66198eb82c026684e9b9773e7b64a"
+        }
     },
     "twig/extra-bundle": {
         "version": "v3.23.0"
