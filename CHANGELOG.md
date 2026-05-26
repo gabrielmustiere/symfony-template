@@ -7,6 +7,17 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-05-26
+
+### Added
+- Design system "Paper" documenté dans `DESIGN.md` (tokens couleurs, typographie Roboto/Montserrat/PT Mono, radius, spacing).
+- Intégration Flowbite 4 (drawer sidebar, toasts flash, datepicker) via importmap (`flowbite`, `@popperjs/core`, `flowbite-datepicker`).
+
+### Changed
+- Redesign complet des templates `base.html.twig`, `security/login.html.twig`, `page/index.html.twig`, `common/flash-messages.html.twig` autour du design system "Paper".
+- Réécriture de `assets/styles/app.css` avec variables `@theme` issues du design system et `@source` Flowbite.
+- Bumps de dépendances : Tailwind 4.3, Symfony UX 3.x (stimulus-bundle, icons, live-component, turbo), PHPUnit 13, phpdocumentor 6, ai-mate 0.9, Playwright 1.60.
+
 ## [1.3.0] - 2026-05-15
 
 ### Added
@@ -112,7 +123,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Frontend Tailwind CSS avec Symfony UX (Stimulus, AssetMapper).
 - Automatisation via Symfony CLI (watch Tailwind, services Docker).
 
-[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.0.0...v1.1.0
