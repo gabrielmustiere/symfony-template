@@ -20,6 +20,15 @@ final class PageController extends AbstractController
         return $this->render('page/index.html.twig');
     }
 
+    #[Route(
+        path: '/design-system',
+        name: 'app_design_system'
+    )]
+    public function designSystem(): Response
+    {
+        return $this->render('page/design-system.html.twig');
+    }
+
     /**
      * @throws TransportExceptionInterface
      */
