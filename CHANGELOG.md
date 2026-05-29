@@ -7,6 +7,16 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-05-29
+
+### Added
+- Page Design System listant tous les composants UX Toolkit Flowbite 4 avec leurs variants et exemples interactifs.
+- Intégration de `tales-from-a-dev/flowbite-bundle` comme form theme Symfony pour styler automatiquement les formulaires avec les classes Flowbite/Tailwind.
+
+### Changed
+- Alignement des tokens couleur sur les valeurs par défaut Flowbite (blue→violet, emerald→green, rose→red, orange→amber).
+- Mise à jour de la typographie : Roboto (corps), Montserrat (display), PT Mono (mono) via Google Fonts.
+
 ## [1.5.1] - 2026-05-26
 
 ### Changed
@@ -141,7 +151,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Frontend Tailwind CSS avec Symfony UX (Stimulus, AssetMapper).
 - Automatisation via Symfony CLI (watch Tailwind, services Docker).
 
-[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.1...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.3.0...v1.4.0
