@@ -1,35 +1,26 @@
 .DEFAULT_GOAL := help
-.PHONY: help init install up down serve stop start db-create db-drop db-reset migrate migration fixtures \
-        test phpunit playwright phpstan php-cs-fix php-cs-check build quality ci
+.PHONY: help init install down serve stop db-create db-drop db-reset migrate migration fixtures \
+        phpunit playwright phpstan php-cs-fix php-cs-check build quality ci
 
 help: ## Affiche cette aide
 	@grep -E '^[a-zA-Z_-]+:.*##' $(MAKEFILE_LIST) | sort | awk -F ':.*## ' '{printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
 ## Installation
 
-init: up install db-reset ## Installation complète (deps + DB + fixtures)
+init: install db-reset ## Installation complète (deps + DB + fixtures)
 
 install: ## Installe les dépendances PHP, JS et Playwright
 	symfony composer install
 	npm install
 	npx playwright install chromium
-	symfony console tailwind:build
 
-## Docker & serveur
+## Serveur
 
-up: ## Démarre les conteneurs Docker (Mailpit)
-	docker compose up -d --wait
-
-down: ## Arrête les conteneurs Docker
-	docker compose down
-
-serve: ## Lance le serveur Symfony en arrière-plan
-	symfony serve -d
+serve: stop ## Lance le serveur Symfony en arrière-plan
+	symfony serve
 
 stop: ## Arrête le serveur Symfony
 	symfony server:stop
-
-start: up serve ## Démarre Docker + serveur Symfony
 
 ## Base de données
 
@@ -51,8 +42,6 @@ fixtures: ## Charge les fixtures Doctrine
 	symfony console doctrine:fixtures:load -n
 
 ## Tests
-
-test: phpunit ## Alias de phpunit
 
 phpunit: ## Lance les tests PHPUnit (Unit + Functional)
 	symfony php bin/phpunit

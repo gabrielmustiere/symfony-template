@@ -1,21 +1,21 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @source "../vendor/flowbite";
 
 @custom-variant dark (&:is(.dark *));
 
-/* Design system: Paper (DESIGN.md) — minimal, monochrome + violet accent */
+/* You can customize theming here see https://flowbite.com/docs/customize/theming/ */
 @theme {
-    --font-sans: 'Roboto', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif';
-    --font-body: 'Roboto', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Helvetica Neue', 'Arial', 'sans-serif';
-    --font-display: 'Montserrat', 'Roboto', 'ui-sans-serif', 'system-ui', 'sans-serif';
-    --font-mono: 'JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace';
+    --font-sans: 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue',
+    'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-body: 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue',
+    'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace';
 
     /* TEXT VARIABLES */
     --text-2xs: 0.625rem;
     --spacing-8xl: 90rem;
-    --leading-9: 36px;
+    --leading-9: 36px; /* rem pls */
     --leading-7: 28px;
     --leading-8: 32px;
     --leading-6: 24px;
@@ -26,36 +26,32 @@
     --leading-heading-none: 60px;
     --tracking-tight: -0.4px;
 
-    /* BORDER RADIUS — Paper: sm=4 / md=8 */
+    /* BORDER RADIUS VARIABLES */
     --radius-0: 0px;
     --radius-xxs: 2px;
     --radius-xs: 4px;
-    --radius-sm: 4px;
+    --radius-sm: 6px;
     --radius: 8px;
-    --radius-base: 8px;
-    --radius-lg: 12px;
+    --radius-base: 12px;
+    --radius-lg: 16px;
 
-    /* BORDER WIDTH */
+    /* BORDER WIDTH VARIABLES */
     --default-border-width: 1px;
 
-    /* Paper palette tokens */
-    --color-paper-ink: #111111;          /* primary */
-    --color-paper-violet: #8B5CF6;       /* secondary */
-    --color-paper-violet-soft: #F5F3FF;
-    --color-paper-violet-medium: #DDD6FE;
-    --color-paper-violet-strong: #6D28D9;
-    --color-paper-surface: #FFFFFF;
-    --color-paper-text: #111827;
-    --color-paper-muted: #6B7280;
-    --color-paper-line: #E5E7EB;
-
-    /* TEXT COLORS — anchored on Paper ink */
+    /* TEXT COLORS VARIABLES */
+    /* main text color */
     --color-body: var(--color-gray-600);
     --color-body-subtle: var(--color-gray-500);
-    --color-heading: var(--color-paper-ink);
-    --color-fg-brand-subtle: var(--color-violet-200);
-    --color-fg-brand: var(--color-paper-violet);
-    --color-fg-brand-strong: var(--color-paper-violet-strong);
+
+    /* text heading colors */
+    --color-heading: var(--color-gray-900);
+
+    /* used for custom brand colors */
+    --color-fg-brand-subtle: var(--color-blue-200);
+    --color-fg-brand: var(--color-blue-700);
+    --color-fg-brand-strong: var(--color-blue-900);
+
+    /* used for status colors */
     --color-fg-success: var(--color-emerald-700);
     --color-fg-success-strong: var(--color-emerald-900);
     --color-fg-danger: var(--color-rose-700);
@@ -70,11 +66,12 @@
     --color-fg-pink: var(--color-pink-600);
     --color-fg-lime: var(--color-lime-600);
 
-    /* BACKGROUND COLORS */
-    --color-neutral-primary-soft: var(--color-paper-surface);
-    --color-neutral-primary: var(--color-paper-surface);
-    --color-neutral-primary-medium: var(--color-paper-surface);
-    --color-neutral-primary-strong: var(--color-paper-surface);
+    /* BACKGROUND COLOR VARIABLES */
+    /* used for neutral colors */
+    --color-neutral-primary-soft: var(--color-white);
+    --color-neutral-primary: var(--color-white);
+    --color-neutral-primary-medium: var(--color-white);
+    --color-neutral-primary-strong: var(--color-white);
     --color-neutral-secondary-soft: var(--color-gray-50);
     --color-neutral-secondary: var(--color-gray-50);
     --color-neutral-secondary-medium: var(--color-gray-50);
@@ -87,13 +84,14 @@
     --color-neutral-quaternary-medium: var(--color-gray-200);
     --color-gray: var(--color-gray-300);
 
-    /* Brand — Paper accent violet (#8B5CF6) */
-    --color-brand-softer: var(--color-paper-violet-soft);
-    --color-brand-soft: var(--color-violet-100);
-    --color-brand: var(--color-paper-violet);
-    --color-brand-medium: var(--color-paper-violet-medium);
-    --color-brand-strong: var(--color-paper-violet-strong);
+    /* used for brand colors */
+    --color-brand-softer: var(--color-blue-50);
+    --color-brand-soft: var(--color-blue-100);
+    --color-brand: var(--color-blue-700);
+    --color-brand-medium: var(--color-blue-200);
+    --color-brand-strong: var(--color-blue-800);
 
+    /* used for status colors */
     --color-success-soft: var(--color-emerald-50);
     --color-success: var(--color-emerald-700);
     --color-success-medium: var(--color-emerald-100);
@@ -107,10 +105,10 @@
     --color-warning-medium: var(--color-orange-100);
     --color-warning-strong: var(--color-orange-700);
     --color-dark-soft: var(--color-gray-800);
-    --color-dark: var(--color-paper-ink);
-    --color-dark-strong: #000000;
+    --color-dark: var(--color-gray-800);
+    --color-dark-strong: var(--color-gray-900);
     --color-disabled: var(--color-gray-100);
-    --color-purple: var(--color-paper-violet);
+    --color-purple: var(--color-purple-500);
     --color-sky: var(--color-sky-500);
     --color-teal: var(--color-teal-600);
     --color-pink: var(--color-pink-600);
@@ -119,45 +117,56 @@
     --color-indigo: var(--color-indigo-600);
     --color-orange: var(--color-orange-400);
 
-    /* BORDER COLORS */
-    --color-buffer: var(--color-paper-surface);
-    --color-buffer-medium: var(--color-paper-surface);
-    --color-buffer-strong: var(--color-paper-surface);
+    /* BORDER COLOR VARIABLES */
+    --color-buffer: var(--color-white);
+    --color-buffer-medium: var(--color-white);
+    --color-buffer-strong: var(--color-white);
     --color-muted: var(--color-gray-50);
     --color-light-subtle: var(--color-gray-100);
     --color-light: var(--color-gray-100);
     --color-light-medium: var(--color-gray-100);
-    --color-default-subtle: var(--color-paper-line);
-    --color-default: var(--color-paper-line);
-    --color-default-medium: var(--color-paper-line);
-    --color-default-strong: var(--color-gray-300);
+    --color-default-subtle: var(--color-gray-200);
+    --color-default: var(--color-gray-200);
+    --color-default-medium: var(--color-gray-200);
+    --color-default-strong: var(--color-gray-200);
+
+    /* used for status colors */
     --color-success-subtle: var(--color-emerald-200);
     --color-danger-subtle: var(--color-rose-200);
     --color-warning-subtle: var(--color-orange-200);
-    --color-brand-subtle: var(--color-paper-violet-medium);
-    --color-brand-light: var(--color-paper-violet);
-    --color-dark-subtle: var(--color-paper-ink);
-    --color-dark-backdrop: #000000;
+    --color-brand-subtle: var(--color-blue-200);
+    --color-brand-light: var(--color-blue-600);
+    --color-dark-subtle: var(--color-gray-800);
+    --color-dark-backdrop: var(--color-gray-950);
 
-    /* shiki */
-    --color-shiki-fg-brand: var(--color-paper-violet);
-    --color-shiki-fg-brand-subtle: var(--color-paper-violet-medium);
+    /* shiki variables */
+    --color-shiki-fg-brand: #79b8ff;
+    --color-shiki-fg-brand-subtle: #9ecbff;
 }
 
 .dark {
+    /* text color variables */
     --color-body: var(--color-gray-400);
     --color-body-subtle: var(--color-gray-400);
     --color-heading: var(--color-white);
-    --color-fg-brand-subtle: var(--color-violet-300);
-    --color-fg-brand: var(--color-violet-400);
-    --color-fg-brand-strong: var(--color-violet-300);
-    --color-fg-success: var(--color-emerald-500);
+    --color-fg-brand-subtle: var(--color-blue-200);
+    --color-fg-brand: var(--color-blue-500);
+    --color-fg-brand-strong: var(--color-blue-400);
+    --color-fg-success: var(--color-emerald-600);
     --color-fg-success-strong: var(--color-emerald-300);
     --color-fg-danger: var(--color-rose-500);
     --color-fg-danger-strong: var(--color-rose-300);
     --color-fg-warning-subtle: var(--color-orange-500);
     --color-fg-warning: var(--color-orange-300);
+    --color-fg-yellow: var(--color-yellow-400);
+    --color-fg-disabled: var(--color-gray-600);
+    --color-fg-purple: var(--color-purple-500);
+    --color-fg-cyan: var(--color-cyan-500);
+    --color-fg-indigo: var(--color-indigo-500);
+    --color-fg-pink: var(--color-pink-500);
+    --color-fg-lime: var(--color-lime-500);
 
+    /* background color variables */
     --color-neutral-primary-soft: var(--color-gray-900);
     --color-neutral-primary: var(--color-gray-950);
     --color-neutral-primary-medium: var(--color-gray-800);
@@ -173,13 +182,11 @@
     --color-neutral-quaternary: var(--color-gray-700);
     --color-neutral-quaternary-medium: var(--color-gray-600);
     --color-gray: var(--color-gray-600);
-
-    --color-brand-softer: var(--color-violet-950);
-    --color-brand-soft: var(--color-violet-900);
-    --color-brand: var(--color-violet-500);
-    --color-brand-medium: var(--color-violet-800);
-    --color-brand-strong: var(--color-violet-400);
-
+    --color-brand-softer: var(--color-blue-950);
+    --color-brand-soft: var(--color-blue-900);
+    --color-brand: var(--color-blue-600);
+    --color-brand-medium: var(--color-blue-900);
+    --color-brand-strong: var(--color-blue-700);
     --color-success-soft: var(--color-emerald-950);
     --color-success: var(--color-emerald-600);
     --color-success-medium: var(--color-emerald-900);
@@ -196,7 +203,16 @@
     --color-dark: var(--color-gray-800);
     --color-dark-strong: var(--color-gray-700);
     --color-disabled: var(--color-gray-800);
+    --color-purple: var(--color-purple-500);
+    --color-sky: var(--color-sky-500);
+    --color-teal: var(--color-teal-500);
+    --color-pink: var(--color-pink-500);
+    --color-cyan: var(--color-cyan-500);
+    --color-fuchsia: var(--color-fuchsia-500);
+    --color-indigo: var(--color-indigo-500);
+    --color-orange: var(--color-orange-400);
 
+    /* border color variables */
     --color-buffer: var(--color-gray-950);
     --color-buffer-medium: var(--color-gray-900);
     --color-buffer-strong: var(--color-gray-800);
@@ -211,15 +227,8 @@
     --color-success-subtle: var(--color-emerald-900);
     --color-danger-subtle: var(--color-rose-900);
     --color-warning-subtle: var(--color-orange-900);
-    --color-brand-subtle: var(--color-violet-900);
-    --color-brand-light: var(--color-violet-500);
+    --color-brand-subtle: var(--color-blue-900);
+    --color-brand-light: var(--color-blue-600);
     --color-dark-subtle: var(--color-gray-700);
     --color-dark-backdrop: var(--color-gray-950);
-}
-
-/* Paper utilities — typographie display & subtle paper texture */
-@layer base {
-    html { font-feature-settings: 'kern', 'liga', 'calt'; }
-    h1, h2, h3, h4, .font-display { font-family: var(--font-display); letter-spacing: -0.02em; }
-    code, kbd, pre, samp { font-family: var(--font-mono); }
 }
