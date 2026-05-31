@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Template Symfony 8 avec authentification, Tailwind CSS 4, PHPUnit 12, Playwright.
+Template Symfony 8 avec authentification, Tailwind CSS 4, PHPUnit 13, Playwright.
 
 **Tradeoff :** ces directives privilégient la prudence sur la vitesse. Pour les tâches triviales, utilise ton jugement.
 
@@ -57,19 +57,20 @@ Pour le multi-étapes : suivre le workflow `PLAN → ANALYZE → BUILD → TEST`
 
 - PHP 8.5+ (`declare(strict_types=1)` partout), SQLite (`var/data.db`), Symfony 8.0, Symfony Messenger (Doctrine)
 - Frontend : Tailwind CSS 4, Stimulus, Symfony UX (Live Components, Turbo, Icons)
-- Tests : PHPUnit 12 + Playwright (E2E)
+- Tests : PHPUnit 13 + Playwright (E2E)
 - Qualité : PHPStan level 9 + PHP-CS-Fixer
+- AI : serveur MCP `symfony-ai-mate` configuré dans `mate/` (extensions symfony + monolog) ; extensions maison dans `App\Mate\` (`mate/src/`)
 
 ## Commandes
 
 Toutes les commandes PHP passent par `symfony` CLI — jamais `php` directement.
 
 ```bash
-make start                                # Démarre Docker (Mailpit) + serveur Symfony
+make serve                                # Lance le serveur Symfony (Mailpit : docker compose up -d)
 make db-reset                             # Reset DB complet (drop + migrate + fixtures)
 symfony console make:migration            # Après modif d'une entité
-make test                                 # PHPUnit (Unit + Functional)
-make test-e2e                             # Playwright (E2E)
+make phpunit                              # PHPUnit (Unit + Functional)
+make playwright                           # Playwright (E2E)
 make quality                              # CS-Fixer + PHPStan + build
 make ci                                   # Reproduit la CI (lint + tests unitaires)
 ```
@@ -81,7 +82,7 @@ make ci                                   # Reproduit la CI (lint + tests unitai
 - Ne jamais modifier `vendor/`
 - Pas de `dump()`, `var_dump()`, `dd()` dans le code commité
 - Toute modif de schéma = migration générée par `symfony console make:migration`
-- PHPUnit 12 : `createStub()` sans attentes, `createMock()` avec `expects()`
+- PHPUnit 13 : `createStub()` sans attentes, `createMock()` avec `expects()`
 - Playwright : sélecteurs `data-test="..."`, config dans `playwright.config.ts`
 - Enums : backed string enums dans `src/Enum/Type/`
 - Mailer : classes dédiées dans `src/Mailer/` avec `TemplatedEmail`
@@ -100,7 +101,7 @@ Request → Controller → Service/Manager → Repository → Entity → Respons
 
 ## Skills disponibles
 
-Le projet utilise la marketplace `gabrielmustiere/skills` avec deux plugins installés :
+Le projet s'appuie sur la marketplace `gabrielmustiere/skills`. Deux plugins structurent le travail sur ce dépôt :
 
 ### Plugin `workflow` — pipeline de développement
 

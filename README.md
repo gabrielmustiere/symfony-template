@@ -41,9 +41,10 @@ Squelette d'application Symfony pré-configuré avec les outils modernes de dév
    ```bash
    php -r "echo bin2hex(random_bytes(16)).PHP_EOL;"
    ```
-5. Lancez l'application :
+5. Lancez Mailpit puis le serveur :
    ```bash
-   make start
+   docker compose up -d   # Mailpit (capture des e-mails)
+   make serve             # serveur Symfony
    ```
    L'application est accessible sur https://template.wip (ou le domaine que vous avez choisi).
 
@@ -55,11 +56,11 @@ Toutes les opérations courantes passent par `make`. Lancez `make help` pour la 
 |---------------------|------------------------------------------------------------|
 | `make init`         | Installation complète (deps + DB + fixtures)               |
 | `make install`      | Réinstalle les dépendances PHP/JS/Playwright               |
-| `make start`        | Démarre Docker (Mailpit) + serveur Symfony                 |
+| `make serve`        | Lance le serveur Symfony (`serve-d` en arrière-plan)       |
 | `make stop`         | Arrête le serveur Symfony                                  |
 | `make db-reset`     | Recrée la base from scratch (drop + migrate + fixtures)    |
 | `make migration`    | Génère une migration depuis le diff d'entités              |
-| `make phpunit`      | Lance les tests PHPUnit (Unit + Functional) — alias `test` |
+| `make phpunit`      | Lance les tests PHPUnit (Unit + Functional)                |
 | `make playwright`   | Lance les tests E2E Playwright                             |
 | `make php-cs-fix`   | Corrige le code style (PHP-CS-Fixer)                       |
 | `make phpstan`      | Analyse statique PHPStan level 9                           |

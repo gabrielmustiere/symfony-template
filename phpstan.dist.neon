@@ -1,5 +1,8 @@
+includes:
+    - vendor/tomasvotruba/cognitive-complexity/config/extension.neon
+
 parameters:
-    level: 9
+    level: 10
     paths:
         - bin/
         - config/
@@ -9,3 +12,27 @@ parameters:
     excludePaths:
         - tests/bootstrap.php
         - src/Kernel.php
+        - public/index.php
+    ignoreErrors:
+        # Cognitive complexity non appliquée aux Entity / FormType / Repository
+        -
+            identifier: complexity.classLike
+            reportUnmatched: false
+            paths:
+                - src/Entity/*
+                - src/Form/*
+                - src/Repository/*
+        -
+            identifier: complexity.functionLike
+            reportUnmatched: false
+            paths:
+                - src/Entity/*
+                - src/Form/*
+                - src/Repository/*
+        -
+            identifier: complexity.dependencyTree
+            reportUnmatched: false
+            paths:
+                - src/Entity/*
+                - src/Form/*
+                - src/Repository/*

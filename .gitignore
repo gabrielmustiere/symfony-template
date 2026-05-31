@@ -22,6 +22,9 @@
 
 .idea
 
+# Outils QA isolés (deps incompatibles avec le composer.json racine)
+/tools/phpinsights/vendor/
+
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
