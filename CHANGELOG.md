@@ -7,6 +7,19 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.6.1] - 2026-05-31
+
+### Added
+- Intégration de PHP Insights (dépendances isolées dans `tools/phpinsights`) avec la cible `make insights`.
+- Extension PHPStan de complexité cognitive (`tomasvotruba/cognitive-complexity`).
+- Nouvelles cibles Makefile : couverture PHPUnit (`phpunit-coverage`, `-text`, `-clover`), filtres (`phpunit-filter`, `playwright-file`), `serve-d`, `update`, `db-validate`, `cache-clear`, `migrate-rollback`, `clean`. Aide `make help` colorée et sectionnée.
+- Activation du plugin `workflow@forge` via `.claude/settings.json`.
+
+### Changed
+- PHPStan passe au niveau 10 (complexité cognitive exclue des Entity/Form/Repository).
+- Cibles Makefile renommées : `start` → `serve`, `test` → `phpunit`.
+- Documentation synchronisée (README, CLAUDE.md) : PHPUnit 13, nouvelles commandes.
+
 ## [1.6.0] - 2026-05-29
 
 ### Added
@@ -151,7 +164,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Frontend Tailwind CSS avec Symfony UX (Stimulus, AssetMapper).
 - Automatisation via Symfony CLI (watch Tailwind, services Docker).
 
-[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.1...HEAD
+[1.6.1]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.4.0...v1.5.0
