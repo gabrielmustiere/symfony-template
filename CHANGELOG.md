@@ -7,6 +7,14 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-07-14
+
+### Changed
+- Montée de Symfony 8.0 → 8.1 (framework-bundle et tous les composants).
+- Montée majeure des outils AI Mate : `symfony/ai-mate` et extensions 0.9 → 0.10.
+- Montée majeure de `symfonycasts/tailwind-bundle` 0.12 → 0.14.
+- Mise à jour des dépendances de qualité et frontend : PHPStan 2.1 → 2.2, PHPUnit 13.1 → 13.2, Twig 3.26 → 3.28, Symfony UX 3.0 → 3.2, PHP-CS-Fixer, DoctrineBundle, Flex, etc.
+
 ## [1.6.1] - 2026-05-31
 
 ### Added
@@ -164,7 +172,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Frontend Tailwind CSS avec Symfony UX (Stimulus, AssetMapper).
 - Automatisation via Symfony CLI (watch Tailwind, services Docker).
 
-[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.1...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.0...v1.5.1
