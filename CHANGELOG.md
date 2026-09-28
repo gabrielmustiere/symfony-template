@@ -7,6 +7,38 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-09-28
+
+### Added
+- Tests fonctionnels PHPUnit : smoke test des URL et `SecurityControllerTest` (redirection des anonymes, connexion, identifiants invalides, déconnexion).
+- Cible `make db-test` (migrations + fixtures en env test), exécutée avant les cibles PHPUnit.
+- Tests E2E Playwright : navigation Turbo, modal, survol du lien de déconnexion.
+- AI Mate en CLI : `AGENTS.md`, `mate/AGENT_INSTRUCTIONS.md` et 7 skills (`.agents/skills/mate-*`, miroir dans `.claude/skills/`) générés par `mate discover`, relancé automatiquement après `composer install` / `update`.
+- `Kernel::getAllowedEnvs()` restreint `APP_ENV` à `prod`, `dev` et `test` (recette FrameworkBundle).
+
+### Changed
+- Montée majeure de `symfony/ai-mate` et extensions 0.10 → 0.14 : le serveur MCP est remplacé par la CLI `symfony php vendor/bin/mate` ; outils maison dans le namespace `Mate\`.
+- Montée de Turbo 7.3 → 8.0, avec préchargement au survol désactivé.
+- Montée majeure de `symfonycasts/tailwind-bundle` 0.14 → 1.0 et de Tailwind CSS 4.3.0 → 4.3.3.
+- Mise à jour des dépendances : Symfony 8.1.1 → 8.1.7, Symfony UX 3.2 → 3.5, Doctrine ORM 3.6 → 3.7, DoctrineBundle 3.2 → 3.3, PHPUnit 13.2 → 13.3, PHPStan 2.2.16, Twig 3.30, Playwright 1.60 → 1.63, `@types/node` 25 → 26.
+- Recettes Flex mises à jour (doctrine-bundle, framework-bundle, web-profiler-bundle, php-cs-fixer, monolog-bundle).
+- Contrôleur Stimulus du modal UX Toolkit renommé `modal` → `flowbite-modal`.
+
+### Fixed
+- Erreur 500 en prod et en test sur toutes les pages du layout, qui liait la route `app_test_email` réservée au dev.
+- Flowbite réinitialisé après chaque navigation Turbo (menus et drawer inactifs après la connexion).
+- Collision entre le modal UX Toolkit et le JS de Flowbite sur l'attribut `data-modal-target`.
+- Build Tailwind local sous macOS 27 (binaire v4.3.0 rejeté pour signature invalide).
+- Texte parasite affiché par `tests/bootstrap.php` à chaque lancement de PHPUnit.
+
+### Removed
+- Serveur MCP `symfony-ai-mate` de `.mcp.json`, remplacé par la CLI Mate.
+- CI/CD GitHub (`.github/workflows/ci.yml`) et cible `make ci` (équivalent local : `make lint phpunit`).
+- Dépendances transitives `symfony/uid` et `php-http/discovery`, qui n'arrivaient que via `mcp/sdk`.
+
+### Security
+- `mcp/sdk` retiré (CVE-2026-53965) ; `postcss` et `nanoid` corrigés via `npm audit fix`.
+
 ## [1.7.0] - 2026-07-14
 
 ### Changed
@@ -172,7 +204,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Frontend Tailwind CSS avec Symfony UX (Stimulus, AssetMapper).
 - Automatisation via Symfony CLI (watch Tailwind, services Docker).
 
-[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.8.0...HEAD
+[1.8.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.0...v1.6.1
 [1.6.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.5.1...v1.6.0
