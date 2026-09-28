@@ -2,7 +2,7 @@
         db-create db-drop db-reset db-test db-validate migrate migration migrate-rollback fixtures cache-clear \
         phpunit phpunit-coverage phpunit-coverage-text phpunit-coverage-clover phpunit-filter \
         playwright playwright-headed playwright-ui playwright-file \
-        phpstan php-cs-fix php-cs-check insights lint build quality ci clean
+        phpstan php-cs-fix php-cs-check insights lint build quality clean
 .DEFAULT_GOAL := help
 
 # Colors
@@ -139,7 +139,7 @@ phpunit-coverage-text: db-test ## Tests avec résumé couverture console (rapide
 	@echo "$(BLUE)🧪 Tests avec résumé couverture...$(RESET)"
 	XDEBUG_MODE=coverage symfony php bin/phpunit --coverage-text=php://stdout --coverage-filter=src
 
-phpunit-coverage-clover: db-test ## Tests avec rapport clover.xml (CI)
+phpunit-coverage-clover: db-test ## Tests avec rapport clover.xml
 	@echo "$(BLUE)🧪 Tests avec rapport clover...$(RESET)"
 	XDEBUG_MODE=coverage symfony php bin/phpunit --coverage-clover var/coverage/clover.xml --coverage-filter=src
 
@@ -185,7 +185,7 @@ php-cs-fix: ## Correction automatique avec PHP CS Fixer
 	@echo "$(BLUE)🔧 Correction du code style...$(RESET)"
 	symfony php vendor/bin/php-cs-fixer fix
 
-php-cs-check: ## Vérifie le code style sans modifier (mode CI)
+php-cs-check: ## Vérifie le code style sans modifier
 	@echo "$(BLUE)🔍 Vérification du code style...$(RESET)"
 	symfony php vendor/bin/php-cs-fixer fix --dry-run --diff
 
@@ -201,8 +201,6 @@ build: ## Build des assets (Tailwind + AssetMapper)
 	symfony console asset-map:compile
 
 quality: php-cs-fix phpstan build ## Lance toute la QA en mode dev (CS Fixer + PHPStan + build)
-
-ci: lint phpunit ## Lance la suite CI (lint + tests unitaires)
 
 ##
 ## NETTOYAGE

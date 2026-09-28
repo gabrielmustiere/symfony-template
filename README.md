@@ -1,6 +1,5 @@
 # Symfony Template
 
-[![CI](https://github.com/gabrielmustiere/symfony-template/actions/workflows/ci.yml/badge.svg)](https://github.com/gabrielmustiere/symfony-template/actions/workflows/ci.yml)
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D8.5-blue.svg)](https://www.php.net/)
 [![Symfony Version](https://img.shields.io/badge/symfony-8.1-black.svg)](https://symfony.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -66,7 +65,6 @@ Toutes les opérations courantes passent par `make`. Lancez `make help` pour la 
 | `make phpstan`      | Analyse statique PHPStan level 9                           |
 | `make lint`         | CS-Fixer (dry-run) + PHPStan                               |
 | `make quality`      | CS-Fixer + PHPStan + build (mode dev)                      |
-| `make ci`           | Lint + tests unitaires (reproduit la CI)                   |
 
 ## Accès aux services
 
@@ -78,16 +76,6 @@ Toutes les opérations courantes passent par `make`. Lancez `make help` pour la 
 ## Identifiants de test
 
 - `admin@example.com` / `password` (ROLE_USER)
-
-## Intégration continue
-
-Le workflow `.github/workflows/ci.yml` exécute à chaque push et PR sur `main` :
-
-1. **Lint** — PHP-CS-Fixer (dry-run) + PHPStan level 9
-2. **Tests** — PHPUnit (Unit + Functional) sur SQLite
-3. **E2E** — Playwright sur un serveur PHP intégré, avec Mailpit en service
-
-Les rapports Playwright sont uploadés en artefact en cas d'échec.
 
 ## Design system & composants
 

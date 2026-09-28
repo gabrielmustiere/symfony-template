@@ -15,7 +15,6 @@
 *.pdf           binary
 
 # Fichiers exclus des archives de release (composer archive / GitHub tarball)
-/.github            export-ignore
 /tests              export-ignore
 /e2e                export-ignore
 /.editorconfig      export-ignore

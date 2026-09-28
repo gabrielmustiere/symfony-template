@@ -72,7 +72,6 @@ symfony console make:migration            # Après modif d'une entité
 make phpunit                              # PHPUnit (Unit + Functional)
 make playwright                           # Playwright (E2E)
 make quality                              # CS-Fixer + PHPStan + build
-make ci                                   # Reproduit la CI (lint + tests unitaires)
 ```
 
 ## Règles critiques
