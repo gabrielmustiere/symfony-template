@@ -415,7 +415,7 @@
                 <p class="mb-3 text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Confirmation</p>
                 <twig:Modal id="modal-confirm">
                     <twig:Modal:Trigger>
-                        <twig:Button variant="outline-brand" {{ ...modal_trigger_attrs }}>Ouvrir la modale</twig:Button>
+                        <twig:Button variant="outline-brand" data-test="modal-trigger" {{ ...modal_trigger_attrs }}>Ouvrir la modale</twig:Button>
                     </twig:Modal:Trigger>
                     <twig:Modal:Content>
                         <twig:Modal:Header>
@@ -429,7 +429,7 @@
                         <twig:Modal:Footer>
                             <twig:Button variant="danger">Supprimer</twig:Button>
                             <twig:Modal:Close>
-                                <twig:Button variant="outline" {{ ...modal_close_attrs }}>Annuler</twig:Button>
+                                <twig:Button variant="outline" data-test="modal-cancel" {{ ...modal_close_attrs }}>Annuler</twig:Button>
                             </twig:Modal:Close>
                         </twig:Modal:Footer>
                     </twig:Modal:Content>
