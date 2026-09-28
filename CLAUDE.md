@@ -59,7 +59,7 @@ Pour le multi-étapes : suivre le workflow `PLAN → ANALYZE → BUILD → TEST`
 - Frontend : Tailwind CSS 4, Stimulus, Symfony UX (Live Components, Turbo, Icons)
 - Tests : PHPUnit 13 + Playwright (E2E)
 - Qualité : PHPStan level 9 + PHP-CS-Fixer
-- AI : serveur MCP `symfony-ai-mate` configuré dans `mate/` (extensions symfony + monolog) ; extensions maison dans `App\Mate\` (`mate/src/`)
+- AI : Symfony AI Mate en CLI (`symfony php vendor/bin/mate`, voir `AGENTS.md`) configuré dans `mate/` (extensions symfony + monolog) ; extensions maison dans `App\Mate\` (`mate/src/`)
 
 ## Commandes
 
@@ -141,3 +141,7 @@ Préfèrer ces skills aux conventions ad hoc — elles encodent les patterns ret
 ---
 
 **Ces directives fonctionnent si :** moins de modifications inutiles dans les diffs, moins de réécritures dues à la sur-conception, et les questions de clarification arrivent **avant** l'implémentation plutôt qu'après les erreurs.
+
+<!-- BEGIN AI_MATE_AGENTS_IMPORT -->
+@AGENTS.md
+<!-- END AI_MATE_AGENTS_IMPORT -->

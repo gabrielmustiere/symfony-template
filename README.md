@@ -19,7 +19,7 @@ Squelette d'application Symfony pré-configuré avec les outils modernes de dév
 - **Tests** : PHPUnit 13 (Unit + Functional) + Playwright 1.60 (E2E)
 - **Qualité** : PHPStan (level 9) + PHP-CS-Fixer
 - **Async** : Symfony Messenger (transport Doctrine)
-- **AI** : Serveurs MCP intégrés (Symfony AI Mate, Playwright, Chrome DevTools)
+- **AI** : Symfony AI Mate (CLI) + serveurs MCP intégrés (Playwright, Chrome DevTools)
 
 ## Prérequis
 
@@ -101,15 +101,21 @@ Stack front retenue (voir [`docs/adr/0001-stack-front-paper-flowbite-ux-toolkit.
 
 Exemple : le composant `<twig:Button>` (`templates/components/Button.html.twig`) expose des variants `brand`, `secondary`, `outline`, `ghost`…, des tailles et formes, et fusionne proprement les classes utilitaires.
 
-## Serveurs MCP (Claude Code)
+## Assistance IA (Claude Code)
 
-Le fichier `.mcp.json` configure trois serveurs MCP pour l'assistance IA :
+**Symfony AI Mate** expose le profiler Symfony, les logs Monolog et les services du container via une CLI (plus de serveur MCP depuis la 0.13). Les agents la découvrent via `AGENTS.md` et `mate/AGENT_INSTRUCTIONS.md`, générés par `mate discover` :
 
-| Serveur             | Description                                                    |
-|---------------------|----------------------------------------------------------------|
-| **symfony-ai-mate** | Accès au profiler Symfony, logs Monolog, services du container |
-| **playwright**      | Automatisation navigateur pour tests et debug                  |
-| **chrome-devtools** | Interaction avec Chrome via DevTools Protocol                  |
+```bash
+symfony php vendor/bin/mate tools:list                              # Liste des outils
+symfony php vendor/bin/mate tools:call symfony-profiler-list --limit=1
+```
+
+Le fichier `.mcp.json` configure deux serveurs MCP :
+
+| Serveur             | Description                                   |
+|---------------------|-----------------------------------------------|
+| **playwright**      | Automatisation navigateur pour tests et debug |
+| **chrome-devtools** | Interaction avec Chrome via DevTools Protocol |
 
 ## Licence
 

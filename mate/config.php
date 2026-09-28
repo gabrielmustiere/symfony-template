@@ -7,6 +7,10 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 
 return static function (ContainerConfigurator $container): void {
     $container->parameters()
+        // The command your coding agent must use, wrapper included.
+        ->set('mate.invocation', 'symfony php vendor/bin/mate')
+        // The major.minor your application runs on: Mate refuses to start under another one.
+        ->set('mate.php_version', '8.5')
         ->set('ai_mate_symfony.cache_dir', '%mate.root_dir%/var/cache')
         ->set('ai_mate_symfony.profiler_dir', '%mate.root_dir%/var/cache/dev/profiler')
         ->set('ai_mate_monolog.log_dir', '%mate.root_dir%/var/log')
