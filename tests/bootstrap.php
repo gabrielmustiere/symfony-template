@@ -1,8 +1,3 @@
-
-/**
-* @phpstan-ignore
-*/
-
 <?php
 
 use Symfony\Component\Dotenv\Dotenv;

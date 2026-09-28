@@ -55,7 +55,7 @@ Pour le multi-étapes : suivre le workflow `PLAN → ANALYZE → BUILD → TEST`
 
 ## Stack
 
-- PHP 8.5+ (`declare(strict_types=1)` partout), SQLite (`var/data.db`), Symfony 8.0, Symfony Messenger (Doctrine)
+- PHP 8.5+ (`declare(strict_types=1)` partout), SQLite (`var/data.db`), Symfony 8.1, Symfony Messenger (Doctrine)
 - Frontend : Tailwind CSS 4, Stimulus, Symfony UX (Live Components, Turbo, Icons)
 - Tests : PHPUnit 13 + Playwright (E2E)
 - Qualité : PHPStan level 9 + PHP-CS-Fixer

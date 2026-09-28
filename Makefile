@@ -1,5 +1,5 @@
 .PHONY: help init install update down serve serve-d stop \
-        db-create db-drop db-reset db-validate migrate migration migrate-rollback fixtures cache-clear \
+        db-create db-drop db-reset db-test db-validate migrate migration migrate-rollback fixtures cache-clear \
         phpunit phpunit-coverage phpunit-coverage-text phpunit-coverage-clover phpunit-filter \
         playwright playwright-headed playwright-ui playwright-file \
         phpstan php-cs-fix php-cs-check insights lint build quality ci clean
@@ -90,6 +90,11 @@ db-drop: ## Supprime les fichiers SQLite (dev + test)
 db-reset: db-drop migrate fixtures ## Recrée la base from scratch (drop + migrate + fixtures)
 	@echo "$(GREEN)✅ Base de données réinitialisée!$(RESET)"
 
+db-test: ## Prépare la base de test (migrations + fixtures en env test)
+	@echo "$(BLUE)📦 Préparation de la base de test...$(RESET)"
+	symfony console doctrine:migrations:migrate -n --env=test
+	symfony console doctrine:fixtures:load -n --env=test
+
 db-validate: ## Valide le schéma Doctrine
 	@echo "$(BLUE)✔️  Validation du schéma Doctrine...$(RESET)"
 	symfony console doctrine:schema:validate
@@ -122,19 +127,19 @@ fixtures: ## Charge les fixtures Doctrine
 ## TESTS
 ##
 
-phpunit: ## Lance les tests PHPUnit (Unit + Functional)
+phpunit: db-test ## Lance les tests PHPUnit (Unit + Functional)
 	@echo "$(BLUE)🧪 Lancement des tests PHPUnit...$(RESET)"
 	symfony php bin/phpunit
 
-phpunit-coverage: ## Tests avec couverture HTML (var/coverage/index.html)
+phpunit-coverage: db-test ## Tests avec couverture HTML (var/coverage/index.html)
 	@echo "$(BLUE)🧪 Tests avec couverture HTML...$(RESET)"
 	XDEBUG_MODE=coverage symfony php bin/phpunit --coverage-html var/coverage --coverage-filter=src
 
-phpunit-coverage-text: ## Tests avec résumé couverture console (rapide)
+phpunit-coverage-text: db-test ## Tests avec résumé couverture console (rapide)
 	@echo "$(BLUE)🧪 Tests avec résumé couverture...$(RESET)"
 	XDEBUG_MODE=coverage symfony php bin/phpunit --coverage-text=php://stdout --coverage-filter=src
 
-phpunit-coverage-clover: ## Tests avec rapport clover.xml (CI)
+phpunit-coverage-clover: db-test ## Tests avec rapport clover.xml (CI)
 	@echo "$(BLUE)🧪 Tests avec rapport clover...$(RESET)"
 	XDEBUG_MODE=coverage symfony php bin/phpunit --coverage-clover var/coverage/clover.xml --coverage-filter=src
 
@@ -142,7 +147,7 @@ ifeq (phpunit-filter,$(firstword $(MAKECMDGOALS)))
   FILTER_ARG := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
   $(eval $(FILTER_ARG):;@:)
 endif
-phpunit-filter: ## Lance un test par nom (ex: make phpunit-filter LoginTest)
+phpunit-filter: db-test ## Lance un test par nom (ex: make phpunit-filter LoginTest)
 	@if [ -z "$(FILTER_ARG)" ]; then echo "$(YELLOW)Usage: make phpunit-filter NomDuTest$(RESET)"; exit 1; fi
 	@echo "$(BLUE)🧪 Tests avec filtre: $(FILTER_ARG)...$(RESET)"
 	@symfony php bin/phpunit --filter "$(FILTER_ARG)"

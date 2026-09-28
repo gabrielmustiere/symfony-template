@@ -2,14 +2,14 @@
 
 [![CI](https://github.com/gabrielmustiere/symfony-template/actions/workflows/ci.yml/badge.svg)](https://github.com/gabrielmustiere/symfony-template/actions/workflows/ci.yml)
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D8.5-blue.svg)](https://www.php.net/)
-[![Symfony Version](https://img.shields.io/badge/symfony-8.0-black.svg)](https://symfony.com/)
+[![Symfony Version](https://img.shields.io/badge/symfony-8.1-black.svg)](https://symfony.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 Squelette d'application Symfony pré-configuré avec les outils modernes de développement : design system "Paper" (Tailwind CSS 4 + Flowbite 4 + UX Toolkit), authentification, tests E2E Playwright, qualité de code (PHPStan level 9 + PHP-CS-Fixer), et intégration MCP pour l'assistance IA.
 
 ## Stack
 
-- **Framework** : Symfony 8.0 / PHP 8.5+
+- **Framework** : Symfony 8.1 / PHP 8.5+
 - **Serveur local** : Symfony CLI (proxy HTTPS `*.wip`)
 - **Base de données** : SQLite (fichier local, zéro infra)
 - **Design system** : "Paper" (voir [`DESIGN.md`](DESIGN.md)) — Tailwind CSS 4.3, Flowbite 4 (drawer, toasts, datepicker), Symfony UX Toolkit (`<twig:Button>`, `tailwind_merge`)
