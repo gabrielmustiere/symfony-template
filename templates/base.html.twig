@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {# Turbo 8 : pas de préchargement au survol (évite notamment un GET /logout au survol) #}
+    <meta name="turbo-prefetch" content="false">
     <title>{% block title %}Symfony Template{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,7 +62,7 @@
             </div>
 
             {% if app.user %}
-                <button type="button" data-dropdown-toggle="paper-topbar-user-menu"
+                <button type="button" data-dropdown-toggle="paper-topbar-user-menu" data-test="user-menu-toggle"
                         class="flex mx-3 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
                     <span class="grid size-8 place-items-center rounded-full bg-gray-900 text-sm font-semibold text-white dark:bg-violet-500">
                         {{ app.user.userIdentifier|first|upper }}
@@ -86,7 +88,7 @@
                     </ul>
                     <ul class="py-1">
                         <li>
-                            <a href="{{ path('app_logout') }}"
+                            <a href="{{ path('app_logout') }}" data-test="logout-link"
                                class="flex items-center gap-2 py-2 px-4 text-sm text-rose-700 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-900/30">
                                 <twig:ux:icon name="tabler:logout" class="w-4 h-4"/> Déconnexion
                             </a>
