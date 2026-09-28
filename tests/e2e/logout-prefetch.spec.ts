@@ -8,8 +8,6 @@ test('hovering the logout link keeps the user logged in', async ({ page }) => {
   await page.click('button[type="submit"]');
   await expect(page).not.toHaveURL(/\/login/);
 
-  // Chargement complet : Flowbite n'initialise pas le menu après une navigation Turbo.
-  await page.goto('/');
   await page.click('[data-test="user-menu-toggle"]');
   await page.hover('[data-test="logout-link"]');
   await page.waitForTimeout(500);
