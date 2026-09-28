@@ -4,7 +4,7 @@
 [![Symfony Version](https://img.shields.io/badge/symfony-8.1-black.svg)](https://symfony.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Squelette d'application Symfony pré-configuré avec les outils modernes de développement : design system "Paper" (Tailwind CSS 4 + Flowbite 4 + UX Toolkit), authentification, tests E2E Playwright, qualité de code (PHPStan level 9 + PHP-CS-Fixer), et intégration MCP pour l'assistance IA.
+Squelette d'application Symfony pré-configuré avec les outils modernes de développement : design system "Paper" (Tailwind CSS 4 + Flowbite 4 + UX Toolkit), authentification, tests E2E Playwright, qualité de code (PHPStan level 10 + PHP-CS-Fixer), et intégration MCP pour l'assistance IA.
 
 ## Stack
 
@@ -16,7 +16,7 @@ Squelette d'application Symfony pré-configuré avec les outils modernes de dév
 - **E-mails** : Mailpit pour la capture en développement
 - **Auth** : Authentification par formulaire (email/password)
 - **Tests** : PHPUnit 13 (Unit + Functional) + Playwright 1.63 (E2E)
-- **Qualité** : PHPStan (level 9) + PHP-CS-Fixer
+- **Qualité** : PHPStan (level 10) + PHP-CS-Fixer
 - **Async** : Symfony Messenger (transport Doctrine)
 - **AI** : Symfony AI Mate (CLI) + serveurs MCP intégrés (Playwright, Chrome DevTools)
 
@@ -62,7 +62,7 @@ Toutes les opérations courantes passent par `make`. Lancez `make help` pour la 
 | `make phpunit`      | Lance les tests PHPUnit (Unit + Functional)                |
 | `make playwright`   | Lance les tests E2E Playwright                             |
 | `make php-cs-fix`   | Corrige le code style (PHP-CS-Fixer)                       |
-| `make phpstan`      | Analyse statique PHPStan level 9                           |
+| `make phpstan`      | Analyse statique PHPStan level 10                          |
 | `make lint`         | CS-Fixer (dry-run) + PHPStan                               |
 | `make quality`      | CS-Fixer + PHPStan + build (mode dev)                      |
 

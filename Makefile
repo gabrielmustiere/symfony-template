@@ -177,7 +177,7 @@ playwright-file: ## Lance un test E2E ciblé. Ex: make playwright-file tests/e2e
 ## QUALITÉ
 ##
 
-phpstan: ## Analyse statique PHPStan (niveau 9)
+phpstan: ## Analyse statique PHPStan (niveau 10)
 	@echo "$(BLUE)🔍 Analyse avec PHPStan...$(RESET)"
 	symfony php vendor/bin/phpstan analyse --no-progress
 
