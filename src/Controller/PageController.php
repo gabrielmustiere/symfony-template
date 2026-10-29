@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +15,7 @@ final class PageController extends AbstractController
 {
     #[Route(
         path: '/',
-        name: 'app_page'
+        name: 'app_page',
     )]
     public function index(): Response
     {
@@ -22,7 +24,7 @@ final class PageController extends AbstractController
 
     #[Route(
         path: '/design-system',
-        name: 'app_design_system'
+        name: 'app_design_system',
     )]
     public function designSystem(): Response
     {
@@ -35,7 +37,7 @@ final class PageController extends AbstractController
     #[Route(
         path: '/test-email',
         name: 'app_test_email',
-        env: 'dev'
+        env: 'dev',
     )]
     public function testEmail(MailerInterface $mailer): Response
     {

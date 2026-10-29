@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -15,7 +17,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    /** @phpstan-ignore property.unusedType (assigned by Doctrine) */
     private ?int $id = null;
 
     /** @var non-empty-string|null */
@@ -86,7 +87,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(#[\SensitiveParameter] string $password): static
     {
         $this->password = $password;
 
@@ -98,6 +99,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function __serialize(): array
     {
+        // @mago-expect analysis:invalid-type-cast (clés mutilées voulues, cf. ligne suivante)
         $data = (array) $this;
         $data["\0" . self::class . "\0password"] = null !== $this->password ? hash('crc32c', $this->password) : null;
 

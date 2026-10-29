@@ -4,7 +4,7 @@
 [![Symfony Version](https://img.shields.io/badge/symfony-8.1-black.svg)](https://symfony.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Squelette d'application Symfony pré-configuré avec les outils modernes de développement : design system "Paper" (Tailwind CSS 4 + Flowbite 4 + UX Toolkit), authentification, tests E2E Playwright, qualité de code (PHPStan level 10 + PHP-CS-Fixer), et intégration MCP pour l'assistance IA.
+Squelette d'application Symfony pré-configuré avec les outils modernes de développement : design system "Paper" (Tailwind CSS 4 + Flowbite 4 + UX Toolkit), authentification, tests E2E Playwright, qualité de code (Mago + PHP Insights), et intégration MCP pour l'assistance IA.
 
 ## Stack
 
@@ -16,7 +16,7 @@ Squelette d'application Symfony pré-configuré avec les outils modernes de dév
 - **E-mails** : Mailpit pour la capture en développement
 - **Auth** : Authentification par formulaire (email/password)
 - **Tests** : PHPUnit 13 (Unit + Functional) + Playwright 1.63 (E2E)
-- **Qualité** : PHPStan (level 10) + PHP-CS-Fixer
+- **Qualité** : Mago (formatage, lint, analyse statique) + PHP Insights
 - **Async** : Symfony Messenger (transport Doctrine)
 - **AI** : Symfony AI Mate (CLI) + serveurs MCP intégrés (Playwright, Chrome DevTools)
 
@@ -61,10 +61,13 @@ Toutes les opérations courantes passent par `make`. Lancez `make help` pour la 
 | `make migration`    | Génère une migration depuis le diff d'entités              |
 | `make phpunit`      | Lance les tests PHPUnit (Unit + Functional)                |
 | `make playwright`   | Lance les tests E2E Playwright                             |
-| `make php-cs-fix`   | Corrige le code style (PHP-CS-Fixer)                       |
-| `make phpstan`      | Analyse statique PHPStan level 10                          |
-| `make lint`         | CS-Fixer (dry-run) + PHPStan                               |
-| `make quality`      | CS-Fixer + PHPStan + build (mode dev)                      |
+| `make fmt`          | Formate le code PHP (Mago, `fmt-check` en lecture seule)   |
+| `make mago-lint`    | Linter Mago (`mago-lint-fix` pour corriger)                |
+| `make analyze`      | Analyse statique Mago                                      |
+| `make insights`     | Analyse qualité PHP Insights                               |
+| `make lint`         | Formatage (check) + lint + analyse, en lecture seule       |
+| `make quality`      | Formatage + lint + analyse + build (mode dev)              |
+| `make qa-full`      | `quality` + PHP Insights + PHPUnit                         |
 
 ## Accès aux services
 

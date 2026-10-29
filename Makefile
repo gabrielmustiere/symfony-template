@@ -2,7 +2,7 @@
         db-create db-drop db-reset db-test db-validate migrate migration migrate-rollback fixtures cache-clear \
         phpunit phpunit-coverage phpunit-coverage-text phpunit-coverage-clover phpunit-filter \
         playwright playwright-headed playwright-ui playwright-file \
-        phpstan php-cs-fix php-cs-check insights lint build quality clean
+        fmt fmt-check mago-lint mago-lint-fix analyze insights lint build quality qa-full clean
 .DEFAULT_GOAL := help
 
 # Colors
@@ -177,30 +177,40 @@ playwright-file: ## Lance un test E2E ciblé. Ex: make playwright-file tests/e2e
 ## QUALITÉ
 ##
 
-phpstan: ## Analyse statique PHPStan (niveau 10)
-	@echo "$(BLUE)🔍 Analyse avec PHPStan...$(RESET)"
-	symfony php vendor/bin/phpstan analyse --no-progress
+fmt: ## Formate le code PHP (Mago)
+	@echo "$(BLUE)🔧 Formatage du code (Mago)...$(RESET)"
+	symfony php vendor/bin/mago format
 
-php-cs-fix: ## Correction automatique avec PHP CS Fixer
-	@echo "$(BLUE)🔧 Correction du code style...$(RESET)"
-	symfony php vendor/bin/php-cs-fixer fix
+fmt-check: ## Vérifie le formatage sans modifier (Mago)
+	@echo "$(BLUE)🔍 Vérification du formatage (Mago)...$(RESET)"
+	symfony php vendor/bin/mago format --check
 
-php-cs-check: ## Vérifie le code style sans modifier
-	@echo "$(BLUE)🔍 Vérification du code style...$(RESET)"
-	symfony php vendor/bin/php-cs-fixer fix --dry-run --diff
+mago-lint: ## Linter Mago (style, bonnes pratiques, intégrations Symfony/Doctrine/PHPUnit)
+	@echo "$(BLUE)🔍 Lint (Mago)...$(RESET)"
+	symfony php vendor/bin/mago lint
+
+mago-lint-fix: ## Applique les corrections automatiques du linter Mago
+	@echo "$(BLUE)🔧 Corrections automatiques du lint (Mago)...$(RESET)"
+	symfony php vendor/bin/mago lint --fix
+
+analyze: ## Analyse statique (Mago)
+	@echo "$(BLUE)🔍 Analyse statique (Mago)...$(RESET)"
+	symfony php vendor/bin/mago analyze
 
 insights: ## Analyse qualité PHP Insights (deps isolées dans tools/phpinsights)
 	@echo "$(BLUE)📊 Analyse PHP Insights...$(RESET)"
 	symfony php tools/phpinsights/vendor/bin/phpinsights --no-interaction
 
-lint: php-cs-check phpstan ## Lint en lecture seule (CS-Fixer dry-run + PHPStan)
+lint: fmt-check mago-lint analyze ## Lint en lecture seule (formatage + lint + analyse Mago)
 
 build: ## Build des assets (Tailwind + AssetMapper)
 	@echo "$(BLUE)🏗️  Build des assets...$(RESET)"
 	symfony console tailwind:build --minify
 	symfony console asset-map:compile
 
-quality: php-cs-fix phpstan build ## Lance toute la QA en mode dev (CS Fixer + PHPStan + build)
+quality: fmt mago-lint analyze build ## Lance toute la QA en mode dev (formatage + lint + analyse Mago + build)
+
+qa-full: quality insights phpunit ## QA complète : quality + PHP Insights + PHPUnit
 
 ##
 ## NETTOYAGE

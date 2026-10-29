@@ -1,0 +1,23 @@
+php-version = "8.5"
+
+[source]
+paths = ["bin", "config", "fixtures", "mate", "public", "src", "tests"]
+includes = ["vendor"]
+excludes = ["config/bundles.php", "config/reference.php"]
+
+[formatter]
+excludes = ["mate/config.php"]
+preserve-breaking-member-access-chain = true
+preserve-breaking-argument-list = true
+preserve-breaking-attribute-list = true
+
+[linter]
+integrations = ["symfony", "doctrine", "phpunit"]
+excludes = ["fixtures", "tests/bootstrap.php", "src/Kernel.php", "public/index.php", "config/preload.php", "mate/config.php", "mate/extensions.php"]
+
+[linter.rules]
+assertion-style = { style = "self" }
+no-literal-password = { exclude = ["tests"] }
+
+[analyzer]
+excludes = ["fixtures", "tests/bootstrap.php", "src/Kernel.php", "public/index.php"]

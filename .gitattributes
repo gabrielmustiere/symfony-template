@@ -21,9 +21,8 @@
 /.gitattributes     export-ignore
 /.gitignore         export-ignore
 /.mcp.json          export-ignore
-/.php-cs-fixer.dist.php export-ignore
 /.symfony.local.yaml export-ignore
-/phpstan.dist.neon  export-ignore
+/mago.toml          export-ignore
 /phpunit.dist.xml   export-ignore
 /playwright.config.ts export-ignore
 /CLAUDE.md          export-ignore
