@@ -13,11 +13,52 @@ preserve-breaking-attribute-list = true
 
 [linter]
 integrations = ["symfony", "doctrine", "phpunit"]
-excludes = ["fixtures", "tests/bootstrap.php", "src/Kernel.php", "public/index.php", "config/preload.php", "mate/config.php", "mate/extensions.php"]
+excludes = ["config/preload.php", "mate/config.php", "mate/extensions.php"]
 
 [linter.rules]
 assertion-style = { style = "self" }
 no-literal-password = { exclude = ["tests"] }
 
 [analyzer]
-excludes = ["fixtures", "tests/bootstrap.php", "src/Kernel.php", "public/index.php"]
+excludes = ["config/preload.php", "mate/config.php", "mate/extensions.php", "public/index.php", "tests/bootstrap.php"]
+minimum-fail-level = "Warning"
+find-overly-wide-return-types = true
+analyze-dead-code = true
+check-dead-catch = true
+strict-list-index-checks = true
+strict-array-index-existence = true
+no-boolean-literal-comparison = true
+check-missing-type-hints = true
+check-closure-missing-type-hints = true
+check-arrow-function-missing-type-hints = true
+check-missing-override = true
+find-unused-parameters = true
+check-use-statements = true
+check-name-casing = true
+enforce-class-finality = true
+
+# Règles d'architecture de CLAUDE.md
+[[guard.perimeter.restrictions]]
+dependency = "Doctrine\\ORM\\QueryBuilder"
+allow-from = ["App\\Repository\\**"]
+reason = "QueryBuilder interdit hors repository"
+
+[[guard.perimeter.restrictions]]
+dependency = "App\\Service\\**"
+deny-from = ["App\\Entity\\**"]
+reason = "Une entité n'injecte pas de service"
+
+[[guard.structural.rules]]
+on = "App\\Controller\\**"
+target = "class"
+must-be-named = "*Controller"
+must-be-final = true
+
+[[guard.structural.rules]]
+on = "App\\Repository\\**"
+target = "class"
+must-be-named = "*Repository"
+
+[[guard.structural.rules]]
+on = "App\\Enum\\Type\\**"
+must-be = ["enum"]

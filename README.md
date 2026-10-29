@@ -16,7 +16,7 @@ Squelette d'application Symfony pré-configuré avec les outils modernes de dév
 - **E-mails** : Mailpit pour la capture en développement
 - **Auth** : Authentification par formulaire (email/password)
 - **Tests** : PHPUnit 13 (Unit + Functional) + Playwright 1.63 (E2E)
-- **Qualité** : Mago (formatage, lint, analyse statique) + PHP Insights
+- **Qualité** : Mago (formatage, lint, analyse statique, règles d'architecture) + PHP Insights
 - **Async** : Symfony Messenger (transport Doctrine)
 - **AI** : Symfony AI Mate (CLI) + serveurs MCP intégrés (Playwright, Chrome DevTools)
 
@@ -64,9 +64,10 @@ Toutes les opérations courantes passent par `make`. Lancez `make help` pour la 
 | `make fmt`          | Formate le code PHP (Mago, `fmt-check` en lecture seule)   |
 | `make mago-lint`    | Linter Mago (`mago-lint-fix` pour corriger)                |
 | `make analyze`      | Analyse statique Mago                                      |
+| `make guard`        | Règles d'architecture (Mago guard)                         |
 | `make insights`     | Analyse qualité PHP Insights                               |
-| `make lint`         | Formatage (check) + lint + analyse, en lecture seule       |
-| `make quality`      | Formatage + lint + analyse + build (mode dev)              |
+| `make lint`         | Formatage (check) + lint + analyse + guard, lecture seule  |
+| `make quality`      | Formatage + lint + analyse + guard + build (mode dev)      |
 | `make qa-full`      | `quality` + PHP Insights + PHPUnit                         |
 
 ## Accès aux services

@@ -2,7 +2,7 @@
         db-create db-drop db-reset db-test db-validate migrate migration migrate-rollback fixtures cache-clear \
         phpunit phpunit-coverage phpunit-coverage-text phpunit-coverage-clover phpunit-filter \
         playwright playwright-headed playwright-ui playwright-file \
-        fmt fmt-check mago-lint mago-lint-fix analyze insights lint build quality qa-full clean
+        fmt fmt-check mago-lint mago-lint-fix analyze guard insights lint build quality qa-full clean
 .DEFAULT_GOAL := help
 
 # Colors
@@ -197,18 +197,22 @@ analyze: ## Analyse statique (Mago)
 	@echo "$(BLUE)🔍 Analyse statique (Mago)...$(RESET)"
 	symfony php vendor/bin/mago analyze
 
+guard: ## Règles d'architecture de CLAUDE.md (Mago guard)
+	@echo "$(BLUE)🛡️  Vérification de l'architecture (Mago)...$(RESET)"
+	symfony php vendor/bin/mago guard
+
 insights: ## Analyse qualité PHP Insights (deps isolées dans tools/phpinsights)
 	@echo "$(BLUE)📊 Analyse PHP Insights...$(RESET)"
 	symfony php tools/phpinsights/vendor/bin/phpinsights --no-interaction
 
-lint: fmt-check mago-lint analyze ## Lint en lecture seule (formatage + lint + analyse Mago)
+lint: fmt-check mago-lint analyze guard ## Lint en lecture seule (formatage + lint + analyse + architecture Mago)
 
 build: ## Build des assets (Tailwind + AssetMapper)
 	@echo "$(BLUE)🏗️  Build des assets...$(RESET)"
 	symfony console tailwind:build --minify
 	symfony console asset-map:compile
 
-quality: fmt mago-lint analyze build ## Lance toute la QA en mode dev (formatage + lint + analyse Mago + build)
+quality: fmt mago-lint analyze guard build ## Lance toute la QA en mode dev (formatage + lint + analyse + architecture Mago + build)
 
 qa-full: quality insights phpunit ## QA complète : quality + PHP Insights + PHPUnit
 

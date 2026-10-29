@@ -58,7 +58,7 @@ Pour le multi-étapes : suivre le workflow `PLAN → ANALYZE → BUILD → TEST`
 - PHP 8.5+ (`declare(strict_types=1)` partout), SQLite (`var/data.db`), Symfony 8.1, Symfony Messenger (Doctrine)
 - Frontend : Tailwind CSS 4, Stimulus, Symfony UX (Live Components, Turbo, Icons)
 - Tests : PHPUnit 13 + Playwright (E2E)
-- Qualité : Mago (formatage, lint, analyse statique ; config `mago.toml`) + PHP Insights (`tools/phpinsights`)
+- Qualité : Mago (formatage, lint, analyse statique, `guard` pour les règles d'architecture ; config `mago.toml`) + PHP Insights (`tools/phpinsights`, style délégué à Mago)
 - AI : Symfony AI Mate en CLI (`symfony php vendor/bin/mate`, voir `AGENTS.md`) configuré dans `mate/` (extensions symfony + monolog) ; extensions maison dans `Mate\` (`mate/src/`)
 
 ## Commandes
@@ -71,7 +71,7 @@ make db-reset                             # Reset DB complet (drop + migrate + f
 symfony console make:migration            # Après modif d'une entité
 make phpunit                              # PHPUnit (Unit + Functional)
 make playwright                           # Playwright (E2E)
-make quality                              # Mago (fmt + lint + analyze) + build
+make quality                              # Mago (fmt + lint + analyze + guard) + build
 make qa-full                              # quality + PHP Insights + PHPUnit
 ```
 
@@ -98,6 +98,8 @@ Request → Controller → Service/Manager → Repository → Entity → Respons
 ```
 
 **Interdit** : QueryBuilder hors repository, logique métier dans controller/entity/repository, `new Service()`, entity qui injecte un service.
+
+Vérifié par `make guard` (`mago.toml`, section `guard`) : QueryBuilder hors `App\Repository`, dépendance `App\Entity` → `App\Service`, contrôleurs `final` suffixés `Controller`, repositories suffixés `Repository`, `App\Enum\Type` réservé aux enums.
 
 ## Skills disponibles
 
