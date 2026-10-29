@@ -212,7 +212,7 @@ build: ## Build des assets (Tailwind + AssetMapper)
 	symfony console tailwind:build --minify
 	symfony console asset-map:compile
 
-quality: fmt mago-lint analyze guard build ## Lance toute la QA en mode dev (formatage + lint + analyse + architecture Mago + build)
+quality: fmt mago-lint analyze guard ## Lance toute la QA en mode dev (formatage + lint + analyse + architecture Mago)
 
 qa-full: quality insights phpunit ## QA complète : quality + PHP Insights + PHPUnit
 

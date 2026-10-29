@@ -67,7 +67,7 @@ Toutes les opérations courantes passent par `make`. Lancez `make help` pour la 
 | `make guard`        | Règles d'architecture (Mago guard)                         |
 | `make insights`     | Analyse qualité PHP Insights                               |
 | `make lint`         | Formatage (check) + lint + analyse + guard, lecture seule  |
-| `make quality`      | Formatage + lint + analyse + guard + build (mode dev)      |
+| `make quality`      | Formatage + lint + analyse + guard (mode dev)              |
 | `make qa-full`      | `quality` + PHP Insights + PHPUnit                         |
 
 ## Accès aux services

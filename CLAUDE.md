@@ -71,7 +71,7 @@ make db-reset                             # Reset DB complet (drop + migrate + f
 symfony console make:migration            # Après modif d'une entité
 make phpunit                              # PHPUnit (Unit + Functional)
 make playwright                           # Playwright (E2E)
-make quality                              # Mago (fmt + lint + analyze + guard) + build
+make quality                              # Mago (fmt + lint + analyze + guard)
 make qa-full                              # quality + PHP Insights + PHPUnit
 ```
 
