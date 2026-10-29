@@ -5,7 +5,24 @@ Toutes les modifications notables de ce projet sont documentées dans ce fichier
 Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/),
 et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+Chaque version porte un **titre** et distingue les **évolutions fonctionnelles**
+(perceptibles à l'usage) des **évolutions techniques** (internes, outillage, plomberie).
+
 ## [Unreleased]
+
+## [1.9.0] - 2026-10-29 — Outillage qualité Mago
+
+### ✨ Fonctionnel
+- **Raccourcis de la page d'accueil corrigés** — le bloc « Démarrer » affiche les vraies commandes (`make serve`, `make phpunit`, `make quality`).
+
+### 🔧 Technique
+- **Mago remplace PHP-CS-Fixer et PHPStan** — formatage, lint (intégrations Symfony, Doctrine, PHPUnit) et analyse statique stricte, configurés dans `mago.toml`.
+- **Règles d'architecture vérifiées** — `make guard` contrôle les interdits du projet : QueryBuilder hors repository, service injecté dans une entité, conventions de nommage des contrôleurs et repositories.
+- **Nouvelles cibles qualité** — `fmt`, `fmt-check`, `mago-lint`, `mago-lint-fix`, `analyze`, `guard` et `qa-full`. `quality` ne compile plus les assets. Les cibles `phpstan`, `php-cs-fix` et `php-cs-check` sont retirées.
+- **PHP Insights aligné sur Mago** — les règles de style qui contredisaient Mago sont retirées.
+- **Code renforcé** — `declare(strict_types=1)` partout, classes `final`, `#[\Override]`, `#[\SensitiveParameter]` sur les mots de passe.
+- **Dépendances à jour** — Symfony 8.1.7 → 8.1.10, Symfony UX 3.5 → 3.6, Doctrine ORM 3.7.5, PHPUnit 13.4, AI Mate 0.14 → 0.15, PHP Insights 2.15, Playwright 1.64.
+- **Recettes Flex à jour** — doctrine-bundle, mailer, notifier, security-bundle, stimulus-bundle et ux-turbo. Les recettes doctrine-migrations-bundle et framework-bundle sont marquées à jour sans appliquer leurs changements (déplacement des migrations, suppression de `CLAUDE.md`).
 
 ## [1.8.0] - 2026-09-28
 
@@ -204,7 +221,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Frontend Tailwind CSS avec Symfony UX (Stimulus, AssetMapper).
 - Automatisation via Symfony CLI (watch Tailwind, services Docker).
 
-[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.8.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.9.0...HEAD
+[1.9.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.8.0...v1.9.0
 [1.8.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.0...v1.6.1
