@@ -687,7 +687,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         signing_algorithm?: scalar|Param|null, // Default: "sha256"
  *         routing?: array<string, array{ // Default: []
  *             service?: scalar|Param|null,
- *             secret?: scalar|Param|null, // The secret used to verify incoming request signatures. It must be set in production: with an empty value, requests from any sender are accepted. // Default: ""
+ *             secret?: scalar|Param|null, // The secret used to verify incoming request signatures. It must be set in production: with an empty value, depending on the parser, requests from any sender are accepted or every request is rejected. // Default: ""
  *         }>,
  *     },
  *     remote_event?: bool|array{ // RemoteEvent configuration
@@ -1243,7 +1243,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             token_handler?: Param|string|array{
  *                 id?: scalar|Param|null,
  *                 oidc_user_info?: Param|string|array{
- *                     base_uri?: scalar|Param|null, // Base URI of the userinfo endpoint on the OIDC server, or the OIDC server URI to use the discovery (require "discovery" to be configured).
+ *                     base_uri?: scalar|Param|null, // Base URI of the userinfo endpoint on the OIDC server, or the OIDC server URI to use the discovery (require "discovery" to be configured). The latter must end with a slash when it has a path, as the discovery path is resolved against it as a relative URL.
  *                     discovery?: array{ // Enable the OIDC discovery.
  *                         cache?: array{
  *                             id?: scalar|Param|null, // Cache service id to use to cache the OIDC discovery configuration.
@@ -1311,9 +1311,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             lifetime?: int|Param, // Default: 31536000
  *             path?: scalar|Param|null, // Default: "/"
  *             domain?: scalar|Param|null, // Default: null
- *             secure?: true|false|"auto"|Param, // Default: "auto"
+ *             secure?: true|false|"auto"|Param, // Defaults to the value of "framework.session.cookie_secure", or to "auto".
  *             httponly?: bool|Param, // Default: true
- *             samesite?: null|"lax"|"strict"|"none"|Param, // Default: "lax"
+ *             samesite?: null|"lax"|"strict"|"none"|Param, // Defaults to the value of "framework.session.cookie_samesite", or to "lax".
  *             always_remember_me?: bool|Param, // Default: false
  *             remember_me_parameter?: scalar|Param|null, // Default: "_remember_me"
  *         },
@@ -1533,6 +1533,12 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     secret?: scalar|Param|null, // The secret used to compute fingerprints and checksums // Default: "%kernel.secret%"
  *     fetch_credentials?: "same-origin"|"include"|"omit"|Param, // The default fetch credentials mode for all Live Components ('same-origin', 'include', 'omit') // Default: "same-origin"
  * }
+ * @psalm-type UxToolkitConfig = array{
+ *     preview?: bool|array{ // Wires the preview assets of kits into AssetMapper, Tailwind and the importmap.
+ *         enabled?: bool|Param, // Default: false
+ *         kits?: list<scalar|Param|null>,
+ *     },
+ * }
  * @psalm-type TalesFromADevTwigExtraTailwindConfig = array{
  *     tailwind_merge?: array{
  *         additional_configuration?: mixed, // Default: []
@@ -1555,6 +1561,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     ux_icons?: UxIconsConfig,
  *     twig_component?: TwigComponentConfig,
  *     live_component?: LiveComponentConfig,
+ *     ux_toolkit?: UxToolkitConfig,
  *     tales_from_a_dev_twig_extra_tailwind?: TalesFromADevTwigExtraTailwindConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
@@ -1576,6 +1583,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         ux_icons?: UxIconsConfig,
  *         twig_component?: TwigComponentConfig,
  *         live_component?: LiveComponentConfig,
+ *         ux_toolkit?: UxToolkitConfig,
  *         tales_from_a_dev_twig_extra_tailwind?: TalesFromADevTwigExtraTailwindConfig,
  *     },
  *     "when@prod"?: array{
@@ -1595,6 +1603,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         ux_icons?: UxIconsConfig,
  *         twig_component?: TwigComponentConfig,
  *         live_component?: LiveComponentConfig,
+ *         ux_toolkit?: UxToolkitConfig,
  *         tales_from_a_dev_twig_extra_tailwind?: TalesFromADevTwigExtraTailwindConfig,
  *     },
  *     "when@test"?: array{
@@ -1615,6 +1624,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         ux_icons?: UxIconsConfig,
  *         twig_component?: TwigComponentConfig,
  *         live_component?: LiveComponentConfig,
+ *         ux_toolkit?: UxToolkitConfig,
  *         tales_from_a_dev_twig_extra_tailwind?: TalesFromADevTwigExtraTailwindConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
