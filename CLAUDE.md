@@ -51,7 +51,7 @@ Transformer les tâches en objectifs vérifiables :
 - "Corriger le bug" → "Écrire un test qui le reproduit, puis le faire passer"
 - "Refactor X" → "Tests verts avant et après"
 
-Pour le multi-étapes : suivre le workflow `PLAN → ANALYZE → BUILD → TEST` (voir skill `/workflow:help`). **Ne jamais passer à la phase suivante sans validation du user.**
+Pour le multi-étapes : suivre le workflow `PLAN → ANALYZE → BUILD → TEST` (voir skill `/forge:help`). **Ne jamais passer à la phase suivante sans validation du user.**
 
 ## Stack
 
@@ -103,28 +103,28 @@ Vérifié par `make guard` (`mago.toml`, section `guard`) : QueryBuilder hors `A
 
 ## Skills disponibles
 
-Le projet s'appuie sur la marketplace `gabrielmustiere/skills`. Deux plugins structurent le travail sur ce dépôt :
+Deux plugins structurent le travail sur ce dépôt :
 
-### Plugin `workflow` — pipeline de développement
+### Plugin `forge` — pipeline de développement
 
-Cycle complet vision → backlog → feature/refacto/tech → release.
+Marketplace `gabrielmustiere/forge`. Quatre phases (0 décor, 1 cadrage, 2 implémentation, 3 clôture), trois tracks (feature, refacto, tech). Artifacts dans `docs/story/NNN-<f|r|t>-<slug>/`.
 
-| Skill                    | Usage                                                |
-|--------------------------|------------------------------------------------------|
-| `/workflow:help`         | Vue d'ensemble du pipeline                           |
-| `/workflow:vision`       | Phase 0 : cadrer la vision produit                   |
-| `/workflow:product-backlog` | Construire/maintenir le backlog                   |
-| `/workflow:feature-pitch`, `/workflow:feature-design`, `/workflow:feature` | Track feature complet |
-| `/workflow:refactor-plan`, `/workflow:refactor` | Track refacto                       |
-| `/workflow:tech-plan`, `/workflow:tech` | Track technique                              |
-| `/workflow:test-scenario` | Spécifier les scénarios de test                     |
-| `/workflow:commit`, `/workflow:release` | Sortie de livrables                          |
-| `/workflow:review`, `/workflow:report`, `/workflow:sync` | Suivi & qualité             |
-| `/workflow:import-external`, `/workflow:migrate-legacy`, `/workflow:doc-feature` | Cas particuliers |
+| Skill                                                                  | Usage                                               |
+|------------------------------------------------------------------------|-----------------------------------------------------|
+| `/forge:help`, `/forge:status`                                         | Vue d'ensemble du pipeline, point de situation      |
+| `/forge:vision`, `/forge:product-backlog`, `/forge:stack`              | Phase 0 : vision, backlog, stack                    |
+| `/forge:feature-interview`, `/forge:feature-pitch`, `/forge:feature-plan`, `/forge:feature-implem` | Track feature |
+| `/forge:refactor-plan`, `/forge:refactor-implem`                       | Track refacto                                       |
+| `/forge:tech-plan`, `/forge:tech-implem`                               | Track technique                                     |
+| `/forge:review`, `/forge:sync`, `/forge:commit`                        | Clôture                                             |
+| `/forge:release`                                                       | Release versionnée                                  |
+| `/forge:test-scenario`                                                 | Jouer un scénario utilisateur (Playwright/DevTools) |
+| `/forge:adr`, `/forge:grill`, `/forge:estimate`, `/forge:doc-feature`  | Transverses                                         |
+| `/forge:agents-md`, `/forge:rules`, `/forge:backfill-metadata`         | Maintenance des instructions et metadata            |
 
 ### Plugin `symfony` — recettes framework
 
-À invoquer quand on touche au domaine concerné (controllers, doctrine, forms, events, messenger, validation, etc.).
+Marketplace `gabrielmustiere/skills`. À invoquer quand on touche au domaine concerné (controllers, doctrine, forms, events, messenger, validation, etc.).
 
 | Domaine        | Skills                                                                                          |
 |----------------|-------------------------------------------------------------------------------------------------|
