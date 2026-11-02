@@ -10,6 +10,12 @@ Chaque version porte un **titre** et distingue les **évolutions fonctionnelles*
 
 ## [Unreleased]
 
+## [1.9.1] - 2026-11-02 — Pipeline forge documenté
+
+### 🔧 Technique
+- **Instructions Claude Code alignées sur forge** — `CLAUDE.md` liste les skills `/forge:*` réellement disponibles à la place des anciens `/workflow:*`, décrit le multi-étapes avec les phases du pipeline forge et précise de quelle marketplace vient chaque plugin.
+- **Plugin forge activé sous son nom actuel** — `.claude/settings.json` active `forge@forge` au lieu de l'ancien `workflow@forge`.
+
 ## [1.9.0] - 2026-10-29 — Outillage qualité Mago
 
 ### ✨ Fonctionnel
@@ -221,7 +227,8 @@ Chaque version porte un **titre** et distingue les **évolutions fonctionnelles*
 - Frontend Tailwind CSS avec Symfony UX (Stimulus, AssetMapper).
 - Automatisation via Symfony CLI (watch Tailwind, services Docker).
 
-[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.9.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/symfony-template/compare/v1.9.1...HEAD
+[1.9.1]: https://github.com/gabrielmustiere/symfony-template/compare/v1.9.0...v1.9.1
 [1.9.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.8.0...v1.9.0
 [1.8.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.7.0...v1.8.0
 [1.7.0]: https://github.com/gabrielmustiere/symfony-template/compare/v1.6.1...v1.7.0
