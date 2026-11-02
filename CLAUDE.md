@@ -51,7 +51,7 @@ Transformer les tâches en objectifs vérifiables :
 - "Corriger le bug" → "Écrire un test qui le reproduit, puis le faire passer"
 - "Refactor X" → "Tests verts avant et après"
 
-Pour le multi-étapes : suivre le workflow `PLAN → ANALYZE → BUILD → TEST` (voir skill `/forge:help`). **Ne jamais passer à la phase suivante sans validation du user.**
+Pour le multi-étapes : suivre le pipeline forge — 0 décor, 1 cadrage (pitch / plan), 2 implémentation, 3 clôture (review → sync → commit) (voir skill `/forge:help`). **Ne jamais passer à la phase suivante sans validation du user.**
 
 ## Stack
 
